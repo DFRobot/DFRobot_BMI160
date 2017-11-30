@@ -1,0 +1,29 @@
+#######################################
+# Syntax Coloring DFRobot_BMI160
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+DFRobot_BMI160	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################	
+
+I2cInit	KEYWORD2
+getSensorData	KEYWORD2
+softReset	KEYWORD2
+setInt	KEYWORD2
+setStepCounter	KEYWORD2
+readStepCounter	KEYWORD2
+onlyAccel	KEYWORD2
+onlyGyro	KEYWORD2
+bothAccelGyro	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+BMI160_OK	LITERAL1
