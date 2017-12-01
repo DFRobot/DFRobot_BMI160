@@ -79,6 +79,7 @@ int8_t setStepCounter();
  */
 int8_t readStepCounter(uint16_t *stepVal);
 
+
 ## Compatibility
 
 MCU                | Work Well    | Work Wrong   | Untested    | Remarks
@@ -87,10 +88,12 @@ FireBeetle-ESP32   |      √       |              |             |
 FireBeetle-ESP8266 |      √       |              |             | 
 Arduino uno        |      √       |              |             | 
 
+
 ## History
 
 - data 2017-12-01
 - version V0.1
+
 
 ## Credits
 
