@@ -1,5 +1,5 @@
 /*!
-  * stepCounter.ino
+  * unoStepCounter.ino
   *
   * I2C addr:
   *   0x68: connect SDIO pin of the BMI160 to GND which means the default I2C address
@@ -20,7 +20,9 @@
 
 DFRobot_BMI160 bmi160;
 const int8_t i2c_addr = 0x69;
-int pbIn = 13; 
+int pbIn = 2; 
+bool readStep = false;
+
 enum intnum {
   int1 = 1,
   int2 = 2
@@ -28,14 +30,7 @@ enum intnum {
 
 void stepChange()
 {
-  int8_t rslt = BMI160_OK;
-  uint16_t step_count = 0;
-  if (bmi160.readStepCounter(&step_count)==BMI160_OK){
-    Serial.println("stepeChange ok");
-    Serial.println(step_count);
-  }else{
-    Serial.println("stepeChange false");
-  }
+  readStep = true;
 }
 
 void setup(){
@@ -50,7 +45,7 @@ void setup(){
   if (bmi160.I2cInit(i2c_addr)==BMI160_OK){
     if (bmi160.setInt(int1)==BMI160_OK){
       if (bmi160.setStepCounter()==BMI160_OK){
-        attachInterrupt(pbIn, stepChange, FALLING);
+        attachInterrupt(digitalPinToInterrupt(pbIn), stepChange, FALLING);
       }else{
         Serial.println("set step fail"); 
       }
@@ -64,6 +59,14 @@ void setup(){
 }
 
 void loop(){
+  if (readStep){
+    int8_t rslt = BMI160_OK;
+    uint16_t step_count = 0;
+    if (bmi160.readStepCounter(&step_count)==BMI160_OK){
+      Serial.println(step_count);
+    }
+    readStep = false;
+  }
 }
 
 

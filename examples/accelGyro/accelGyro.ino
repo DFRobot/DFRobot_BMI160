@@ -1,5 +1,5 @@
  /*!
-  * DFRobot_BMI160.ino
+  * accelGyro.ino
   *
   * I2C addr:
   *   0x68: connect SDIO pin of the BMI160 to GND which means the default I2C address

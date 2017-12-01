@@ -56,14 +56,10 @@ int8_t DFRobot_BMI160::I2cInit(struct bmi160Dev *dev)
   }
   
   if (dev->interface == BMI160_SPI_INTF){
-   // Serial.print("SPI==1=");Serial.println(data);
-    rslt = getRegs(BMI160_SPI_COMM_TEST_ADDR, &data, 1, dev); //0x7F
+    rslt = getRegs(BMI160_SPI_COMM_TEST_ADDR, &data, 1, dev);
   }
   if (rslt == BMI160_OK){
-    //Serial.print("SPI==2=");Serial.println(data);
-    //Serial.print("SPI==22=");Serial.println(chip_id);
     rslt = getRegs(BMI160_CHIP_ID_ADDR, &chip_id, 1, dev);
-    //Serial.print("SPI==3=");Serial.println(chip_id);
     if ((rslt == BMI160_OK)&&(chip_id==BMI160_CHIP_ID)){
       dev->any_sig_sel = eBmi160BothAnySigMotionDisabled;
       dev->chipId = chip_id;
@@ -572,26 +568,20 @@ int8_t DFRobot_BMI160::getAccelData(uint8_t len, struct bmi160SensorData *accel,
   float msblsb;
 
   rslt = DFRobot_BMI160::getRegs(BMI160_ACCEL_DATA_ADDR, data_array, 6 + len, dev);
-  //int i=0;
-  //for (i=0;i<(6+len);i++){
-  //  Serial.println(data_array[i]);  
-  //}
+
   if (rslt == BMI160_OK){
     lsb = data_array[idx++];
     msb = data_array[idx++];
     msblsb = (int16_t)((msb << 8) | lsb);
     accel->x = msblsb; /* Data in X axis */
-    //Serial.print(msblsb/16384.0);Serial.print("\t");
     lsb = data_array[idx++];
     msb = data_array[idx++];
     msblsb = (int16_t)((msb << 8) | lsb);
     accel->y = msblsb; /* Data in X axis */
-    //Serial.print(msblsb/16384.0);Serial.print("\t");
     lsb = data_array[idx++];
     msb = data_array[idx++];
     msblsb = (int16_t)((msb << 8) | lsb);
     accel->z = msblsb; /* Data in X axis */
-    //Serial.print(msblsb/16384.0);Serial.println(" ");
   }else{
     rslt = BMI160_E_COM_FAIL;
   }
@@ -609,7 +599,6 @@ int8_t DFRobot_BMI160::getGyroData(uint8_t len, struct bmi160SensorData *gyro, s
   uint8_t lsb;
   uint8_t msb;
   float msblsb;
-  //Serial.print("len=");Serial.println(len);
   if (len == 0) {
     /* read gyro data only */
     rslt = DFRobot_BMI160::getRegs(BMI160_GYRO_DATA_ADDR, data_array, 6, dev);
@@ -619,26 +608,16 @@ int8_t DFRobot_BMI160::getGyroData(uint8_t len, struct bmi160SensorData *gyro, s
       msb = data_array[idx++];
       msblsb = (int16_t)((msb << 8) | lsb);
       gyro->x = msblsb; /* Data in X axis */
-      //Serial.print(msblsb/131.0);Serial.print("\t");
 
       lsb = data_array[idx++];
       msb = data_array[idx++];
       msblsb = (int16_t)((msb << 8) | lsb);
       gyro->y = msblsb; /* Data in Y axis */
-      //Serial.print(msblsb/131.0);Serial.print("\t");
 
       lsb = data_array[idx++];
       msb = data_array[idx++];
       msblsb = (int16_t)((msb << 8) | lsb);
       gyro->z = msblsb; /* Data in Z axis */
-      //Serial.print(msblsb/131.0);Serial.println();
-      //gyro->sensortime = 0;
-      //int i=0;
-      //for(i=0;i<6;i++){
-      //  Serial.print(data_array[i]);Serial.print("\t");  
-      //}
-      //Serial.println();
-
     } else {
       rslt = BMI160_E_COM_FAIL;
     }
@@ -651,19 +630,16 @@ int8_t DFRobot_BMI160::getGyroData(uint8_t len, struct bmi160SensorData *gyro, s
       msb = data_array[idx++];
       msblsb = (int16_t)((msb << 8) | lsb);
       gyro->x = msblsb; /* gyro X axis data */
-      //Serial.print(msblsb/131.0);Serial.print("\t");
 
       lsb = data_array[idx++];
       msb = data_array[idx++];
       msblsb = (int16_t)((msb << 8) | lsb);
       gyro->y = msblsb; /* gyro Y axis data */
-      //Serial.print(msblsb/131.0);Serial.print("\t");
 
       lsb = data_array[idx++];
       msb = data_array[idx++];
       msblsb = (int16_t)((msb << 8) | lsb);
       gyro->z = msblsb; /* gyro Z axis data */
-      //Serial.print(msblsb/131.0);Serial.println();
 
       idx = idx + 6;
       time_0 = data_array[idx++];
@@ -700,39 +676,32 @@ int8_t DFRobot_BMI160::getAccelGyroData(uint8_t len, struct bmi160SensorData *ac
     msb = data_array[idx++];
     msblsb = (int16_t)((msb << 8) | lsb);
     gyro->x = msblsb; /* gyro X axis data */
-    //Serial.print(msblsb/131.0);Serial.print("\t");
-    //Serial.print(gyro->x*3.14/180.0);Serial.print("\t");
 
     lsb = data_array[idx++];
     msb = data_array[idx++];
     msblsb = (int16_t)((msb << 8) | lsb);
     gyro->y = msblsb; /* gyro Y axis data */
-    //Serial.print(gyro->y*3.14/180.0);Serial.print("\t");
 
     lsb = data_array[idx++];
     msb = data_array[idx++];
     msblsb = (int16_t)((msb << 8) | lsb);
     gyro->z = msblsb; /* gyro Z axis data */
-    //Serial.print(gyro->z*3.14/180.0);Serial.print("\t");
 
     /* Accel Data */
     lsb = data_array[idx++];
     msb = data_array[idx++];
     msblsb = (int16_t)((msb << 8) | lsb);
     accel->x = (int16_t)msblsb; /* accel X axis data */
-    //Serial.print(accel->x/16384.0);Serial.print("\t");
 
     lsb = data_array[idx++];
     msb = data_array[idx++];
     msblsb = (int16_t)((msb << 8) | lsb);
     accel->y = (int16_t)msblsb; /* accel Y axis data */
-    //Serial.print(accel->y/16384.0);Serial.print("\t");
 
     lsb = data_array[idx++];
     msb = data_array[idx++];
     msblsb = (int16_t)((msb << 8) | lsb);
     accel->z = (int16_t)msblsb; /* accel Z axis data */
-    //Serial.print(accel->z/16384.0);Serial.println();
 
     if (len == 3) {
       time_0 = data_array[idx++];
@@ -748,11 +717,7 @@ int8_t DFRobot_BMI160::getAccelGyroData(uint8_t len, struct bmi160SensorData *ac
   } else {
     rslt = BMI160_E_COM_FAIL;
   }
-  //int i=0;
-  //for(i=0;i<16;i++){
-  //  Serial.print(data_array[i]);Serial.print("\t");
-  //}
-  //Serial.println();
+
   return rslt;
 } 
 
