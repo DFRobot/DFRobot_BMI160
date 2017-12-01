@@ -26,11 +26,6 @@ const int8_t i2c_addr = 0x69;
 void setup(){
   Serial.begin(115200);
   delay(100);
-  Serial.println("=============================");
-  Serial.println("=============================");
-  Serial.println("=============================");
-  Serial.println("=============================");
-  Serial.println("=============================");
   
   if (bmi160.softReset() != BMI160_OK){
     Serial.println("reset false");

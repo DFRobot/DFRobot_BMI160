@@ -79,13 +79,22 @@ int8_t setStepCounter();
  */
 int8_t readStepCounter(uint16_t *stepVal);
 
+## Compatibility
+
+MCU                | Work Well    | Work Wrong   | Untested    | Remarks
+------------------ | :----------: | :----------: | :---------: | -----
+FireBeetle-ESP32   |      √       |              |             | 
+FireBeetle-ESP8266 |      √       |              |             | 
+Arduino uno        |      √       |              |             | 
+
 ## History
 
-- Sep 29, 2017 - Version 0.2 released.
+- data 2017-12-01
+- version V0.1
 
 ## Credits
 
-Written by lazy.J(test@qq.com), 2017. (Welcome to our [website](https://www.dfrobot.com/))
+Written by DFRobot_haoJ(hao.jiang@dfrobot.com), 2017. (Welcome to our [website](https://www.dfrobot.com/))
 
 
 

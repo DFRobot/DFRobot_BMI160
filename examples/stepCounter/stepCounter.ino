@@ -7,7 +7,7 @@
   *
   * Through the example, you can get the sensor data which means step counter.
   * upload interrupt number by setInt (choose int1 or int2)  
-  * data from int1 and int2 read in stepChange
+  * data from int1 and int2 read in readStepCounter
   * 
   * Copyright   [DFRobot](http://www.dfrobot.com), 2016
   * Copyright   GNU Lesser General Public License
@@ -20,36 +20,31 @@
 
 DFRobot_BMI160 bmi160;
 const int8_t i2c_addr = 0x69;
-int pbIn = 13; 
-enum intnum {
-  int1 = 1,
-  int2 = 2
-};
+bool readStep = false;
+
+#if defined ARDUINO_AVR_UNO || defined ARDUINO_AVR_MEGA2560
+  int pbIn = 2;
+#elif ARDUINO_AVR_LEONARDO
+  int pbIn = 3; 
+#else
+  int pbIn = 13;
+#endif
+/*the bmi160 have two interrput interface*/
+int int1 = 1;
+int int2 = 2;
 
 void stepChange()
 {
-  int8_t rslt = BMI160_OK;
-  uint16_t step_count = 0;
-  if (bmi160.readStepCounter(&step_count)==BMI160_OK){
-    Serial.println("stepeChange ok");
-    Serial.println(step_count);
-  }else{
-    Serial.println("stepeChange false");
-  }
+  readStep = true;
 }
 
 void setup(){
   Serial.begin(115200);
   delay(100);
-  Serial.println("=============================");
-  Serial.println("=============================");
-  Serial.println("=============================");
-  Serial.println("=============================");
-  Serial.println("=============================");
-  
-  if (bmi160.I2cInit(i2c_addr) != BMI160_OK){
+    
+  while (bmi160.I2cInit(i2c_addr) != BMI160_OK){
     Serial.println("i2c init fail");
-    while(1); 
+    delay(1000); 
   }
   if (bmi160.setInt(int1) != BMI160_OK){
     Serial.println("set interrput fail");
@@ -59,20 +54,22 @@ void setup(){
     Serial.println("set step fail");
     while(1);   
   }
-  
+#if defined ARDUINO_AVR_UNO || defined ARDUINO_AVR_MEGA2560 || defined ARDUINO_AVR_LEONARDO
   attachInterrupt(digitalPinToInterrupt(pbIn), stepChange, FALLING);
- 
+#else
+  attachInterrupt(pbIn, stepChange, FALLING);
+#endif
 }
 
 void loop(){
+  if (readStep){
+    int8_t rslt = BMI160_OK;
+    uint16_t stepCounter = 0;
+    if (bmi160.readStepCounter(&stepCounter)==BMI160_OK){
+      Serial.print("step counter = ");Serial.println(stepCounter);
+    }
+    readStep = false;
+  }
 }
-
-
-
-
-
-
-
-
 
 
