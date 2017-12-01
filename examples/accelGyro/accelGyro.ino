@@ -32,12 +32,14 @@ void setup(){
   Serial.println("=============================");
   Serial.println("=============================");
   
-  if (bmi160.softReset()==BMI160_OK){
-    Serial.println("reset ok");
+  if (bmi160.softReset() != BMI160_OK){
+    Serial.println("reset false");
+    while(1);
   }
   
-  if (bmi160.I2cInit(i2c_addr)==BMI160_OK){
-    Serial.println("init ok");
+  if (bmi160.I2cInit(i2c_addr) != BMI160_OK){
+    Serial.println("init false");
+    while(1);
   }
 }
 

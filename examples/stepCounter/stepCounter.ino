@@ -47,19 +47,20 @@ void setup(){
   Serial.println("=============================");
   Serial.println("=============================");
   
-  if (bmi160.I2cInit(i2c_addr)==BMI160_OK){
-    if (bmi160.setInt(int1)==BMI160_OK){
-      if (bmi160.setStepCounter()==BMI160_OK){
-        attachInterrupt(pbIn, stepChange, FALLING);
-      }else{
-        Serial.println("set step fail"); 
-      }
-    }else{
-      Serial.println("set interrput fail");
-    }
-  }else{
+  if (bmi160.I2cInit(i2c_addr) != BMI160_OK){
     Serial.println("i2c init fail");
+    while(1); 
   }
+  if (bmi160.setInt(int1) != BMI160_OK){
+    Serial.println("set interrput fail");
+    while(1);
+  }
+  if (bmi160.setStepCounter() != BMI160_OK){
+    Serial.println("set step fail");
+    while(1);   
+  }
+  
+  attachInterrupt(digitalPinToInterrupt(pbIn), stepChange, FALLING);
  
 }
 
