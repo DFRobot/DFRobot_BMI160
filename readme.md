@@ -79,6 +79,7 @@ int8_t setStepCounter();
  */
 int8_t readStepCounter(uint16_t *stepVal);
 
+```
 
 ## Compatibility
 
