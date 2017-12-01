@@ -1194,6 +1194,27 @@ class DFRobot_BMI160{
     int8_t getSensorData(uint8_t type,int16_t* data);
     
     /*
+     * @brief get the accel data 
+     * @param pointer to store the accel data
+     * @return BMI160_OK(0) means succse
+     */
+    int8_t getAccelData(int16_t* data);
+    
+    /*
+     * @brief get the gyro data 
+     * @param pointer to store the gyro data
+     * @return BMI160_OK(0) means succse
+     */
+    int8_t getGyroData(int16_t* data);
+    
+    /*
+     * @brief get the accel and gyro data 
+     * @param pointer to store the accel and gyro data
+     * @return BMI160_OK(0) means succse
+     */
+    int8_t getAccelGyroData(int16_t* data);
+
+    /*
      * @brief reset bmi160 hardware
      * @return BMI160_OK(0) means success
      */

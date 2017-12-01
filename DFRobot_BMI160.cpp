@@ -506,6 +506,47 @@ int8_t DFRobot_BMI160::getSensorData(uint8_t type, int16_t* data)
   return rslt;
 }
 
+int8_t DFRobot_BMI160::getAccelData( int16_t* data)
+{
+  int8_t rslt=BMI160_OK;
+  rslt = getSensorData(BMI160_ACCEL_SEL, Oaccel, NULL, Obmi160);
+  if(rslt == BMI160_OK){
+    data[0]=Ogyro->x;
+    data[1]=Ogyro->y;
+    data[2]=Ogyro->z;
+  }
+  return rslt;
+}
+
+int8_t DFRobot_BMI160::getGyroData( int16_t* data)
+{
+  int rslt = BMI160_OK;
+  rslt = getSensorData(BMI160_GYRO_SEL, NULL, Ogyro, Obmi160); 
+  if(rslt == BMI160_OK){
+    data[0]=Oaccel->x;
+    data[1]=Oaccel->y;
+    data[2]=Oaccel->z;
+  }
+  return rslt;
+}
+
+int8_t DFRobot_BMI160::getAccelGyroData( int16_t* data)
+{
+  int8_t rslt = BMI160_OK;
+  rslt = getSensorData((BMI160_ACCEL_SEL | BMI160_GYRO_SEL),Oaccel, Ogyro, Obmi160);
+  if(rslt == BMI160_OK){
+    data[0]=Ogyro->x;
+    data[1]=Ogyro->y;
+    data[2]=Ogyro->z;
+    data[3]=Oaccel->x;
+    data[4]=Oaccel->y;
+    data[5]=Oaccel->z;
+  }
+  return rslt;  
+}
+
+
+
 int8_t DFRobot_BMI160::getSensorData(uint8_t select_sensor, struct bmi160SensorData *accel, struct bmi160SensorData *gyro,struct bmi160Dev *dev)
 {
   int8_t rslt = BMI160_OK;

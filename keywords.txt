@@ -21,6 +21,10 @@ readStepCounter	KEYWORD2
 onlyAccel	KEYWORD2
 onlyGyro	KEYWORD2
 bothAccelGyro	KEYWORD2
+getAccelData	KEYWORD2
+getGyroData	KEYWORD2
+getAccelGyroData	KEYWORD2
+
 
 #######################################
 # Constants (LITERAL1)
