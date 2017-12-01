@@ -60,11 +60,13 @@ void loop(){
   }
   
   /*
+   * //only read accel data from bmi160
    * int16_t onlyAccel[3]={0};
    * bmi160.getSensorData(bmi160.onlyAccel, onlyAccel);
    */
 
   /*
+   * ////only read gyro data from bmi160
    * int16_t onlyGyro[3]={0};
    * bmi160.getSensorData(bmi160.onlyGyro, onlyGyro);
    */
