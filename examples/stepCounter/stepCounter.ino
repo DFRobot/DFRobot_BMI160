@@ -22,7 +22,7 @@ DFRobot_BMI160 bmi160;
 const int8_t i2c_addr = 0x69;
 bool readStep = false;
 
-#if defined ARDUINO_AVR_UNO || defined ARDUINO_AVR_MEGA2560
+#if defined ARDUINO_AVR_UNO || defined ARDUINO_AVR_MEGA2560 || defined ARDUINO_AVR_PRO
   //interrupt number of uno and mega2560 is 0
   int pbIn = 2;
 #elif ARDUINO_AVR_LEONARDO
@@ -62,7 +62,7 @@ void setup(){
     Serial.println("set step fail");
     while(1);   
   }
-#if defined ARDUINO_AVR_UNO || defined ARDUINO_AVR_MEGA2560 || defined ARDUINO_AVR_LEONARDO
+#if defined ARDUINO_AVR_UNO || defined ARDUINO_AVR_MEGA2560 || defined ARDUINO_AVR_LEONARDO || defined ARDUINO_AVR_PRO
   //set the pin in the board to connect to int1 or int2 of bmi160
   attachInterrupt(digitalPinToInterrupt(pbIn), stepChange, FALLING);
 #else

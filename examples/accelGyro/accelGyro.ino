@@ -22,7 +22,7 @@
 #include <DFRobot_BMI160.h>
 
 DFRobot_BMI160 bmi160;
-const int8_t i2c_addr = 0x69;
+const int8_t i2c_addr = 0x68;
 void setup(){
   Serial.begin(115200);
   delay(100);
