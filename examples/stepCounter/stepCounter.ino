@@ -52,22 +52,32 @@ void setup(){
   }
   
   //set interrput number to int1 or int2
-  if (bmi160.setInt(int1) != BMI160_OK){
+  if (bmi160.setInt(int2) != BMI160_OK){
     Serial.println("set interrput fail");
     while(1);
   }
-  
+
   //set the bmi160 mode to step counter
   if (bmi160.setStepCounter() != BMI160_OK){
     Serial.println("set step fail");
-    while(1);   
+    while(1);
   }
+  
+  //set the bmi160 power model,contains:stepNormalPowerMode,stepLowPowerMode
+  //if (bmi160.setStepPowerMode(bmi160.stepNormalPowerMode) != BMI160_OK)
+  if (bmi160.setStepPowerMode(bmi160.stepLowPowerMode) != BMI160_OK){
+    Serial.println("set setStepPowerMode fail");
+    while(1);
+  }
+  
 #if defined ARDUINO_AVR_UNO || defined ARDUINO_AVR_MEGA2560 || defined ARDUINO_AVR_LEONARDO || defined ARDUINO_AVR_PRO
   //set the pin in the board to connect to int1 or int2 of bmi160
   attachInterrupt(digitalPinToInterrupt(pbIn), stepChange, FALLING);
 #else
   attachInterrupt(pbIn, stepChange, FALLING);
 #endif
+
+  Serial.println(pbIn);
 }
 
 void loop(){

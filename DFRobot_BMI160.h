@@ -1168,7 +1168,6 @@ enum bmi160StepDetectMode {
   BMI160_STEP_DETECT_USER_DEFINE
 };
 
-
 class DFRobot_BMI160{
   public:
     DFRobot_BMI160();
@@ -1239,10 +1238,19 @@ class DFRobot_BMI160{
      * @return BMI160_OK(0) measn succse
      */
     int8_t readStepCounter(uint16_t *stepVal);
+    /*
+     * @brief set the step power model
+     * @param type of model 
+     * @return BMI160_OK(0) measn succse
+     */
+    int8_t setStepPowerMode(uint8_t model);
+    
 
     uint8_t onlyAccel=1;
     uint8_t onlyGyro=2;
     uint8_t bothAccelGyro=3;
+    uint8_t stepNormalPowerMode=0;
+    uint8_t stepLowPowerMode=1;
 
   private:
     int8_t I2cInit(struct bmi160Dev *dev);
@@ -1300,14 +1308,8 @@ class DFRobot_BMI160{
     int8_t configStepDetect(struct bmi160AccStepDetectIntCfg *stepDetectIntCfg, struct bmi160Dev *dev);
 
     int8_t setStepCounter(uint8_t step_cnt_enable, struct bmi160Dev *dev);
+    int8_t setStepPowerMode(uint8_t model,struct bmi160Dev *dev);
     int8_t readStepCounter(uint16_t *stepVal, struct bmi160Dev *dev);
-
-
-
-
-
-
-
 
     struct bmi160Dev* Obmi160;
     struct bmi160SensorData* Oaccel;

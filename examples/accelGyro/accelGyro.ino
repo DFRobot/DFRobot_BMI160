@@ -22,7 +22,7 @@
 #include <DFRobot_BMI160.h>
 
 DFRobot_BMI160 bmi160;
-const int8_t i2c_addr = 0x68;
+const int8_t i2c_addr = 0x69;
 void setup(){
   Serial.begin(115200);
   delay(100);
@@ -62,7 +62,7 @@ void loop(){
   }else{
     Serial.println("err");
   }
-  
+  delay(100);
   /*
    * //only read accel data from bmi160
    * int16_t onlyAccel[3]={0};

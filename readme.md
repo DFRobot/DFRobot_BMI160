@@ -1,4 +1,4 @@
-# BMI160-Arduino
+﻿# BMI160-Arduino
 The BMI160 is a highly integrated, low power inertial measurement unit (IMU) that provides precise acceleration and angular rate (gyroscopic) measurement.
 The BMI160 contains 16 bit digtial,triaxial accelerometer and 16 bit digital, triaxial gyroscope.
 This example is for BMI160 sensor and it oprated via Arduino I2C.
@@ -92,6 +92,13 @@ int8_t setInt(int intNum);
  * @return BMI160_OK(0) means succse
  */
 int8_t setStepCounter();
+
+/*
+ * @brief set the step power model
+ * @param type of model 
+ * @return BMI160_OK(0) measn succse
+ */
+int8_t setStepPowerMode(uint8_t model);
 
 /*
  * @brief read the step counter from bmi160

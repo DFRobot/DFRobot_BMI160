@@ -18,9 +18,12 @@ softReset	KEYWORD2
 setInt	KEYWORD2
 setStepCounter	KEYWORD2
 readStepCounter	KEYWORD2
+setStepPowerMode	KEYWORD2
 onlyAccel	KEYWORD2
 onlyGyro	KEYWORD2
 bothAccelGyro	KEYWORD2
+stepNormalPowerMode	KEYWORD2
+stepLowPowerMode	KEYWORD2
 getAccelData	KEYWORD2
 getGyroData	KEYWORD2
 getAccelGyroData	KEYWORD2
