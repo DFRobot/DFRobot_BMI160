@@ -51,10 +51,10 @@ void loop(){
   if(rslt == 0){
     for(i=0;i<6;i++){
       if (i<3){
-        //the first three are accel datas
+        //the first three are gyro datas
         Serial.print(accelGyro[i]*3.14/180.0);Serial.print("\t");
       }else{
-        //the following three data are gyro datas
+        //the following three data are accel datas
         Serial.print(accelGyro[i]/16384.0);Serial.print("\t");
       }
     }
