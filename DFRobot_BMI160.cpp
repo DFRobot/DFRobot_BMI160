@@ -511,9 +511,9 @@ int8_t DFRobot_BMI160::getAccelData( int16_t* data)
   int8_t rslt=BMI160_OK;
   rslt = getSensorData(BMI160_ACCEL_SEL, Oaccel, NULL, Obmi160);
   if(rslt == BMI160_OK){
-    data[0]=Ogyro->x;
-    data[1]=Ogyro->y;
-    data[2]=Ogyro->z;
+    data[0]=Oaccel->x;
+    data[1]=Oaccel->y;
+    data[2]=Oaccel->z;
   }
   return rslt;
 }
@@ -523,9 +523,9 @@ int8_t DFRobot_BMI160::getGyroData( int16_t* data)
   int rslt = BMI160_OK;
   rslt = getSensorData(BMI160_GYRO_SEL, NULL, Ogyro, Obmi160); 
   if(rslt == BMI160_OK){
-    data[0]=Oaccel->x;
-    data[1]=Oaccel->y;
-    data[2]=Oaccel->z;
+    data[0]=Ogyro->x;
+    data[1]=Ogyro->y;
+    data[2]=Ogyro->z;
   }
   return rslt;
 }
