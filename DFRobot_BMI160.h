@@ -34,6 +34,17 @@ THE SOFTWARE.
 #include<Wire.h>
 #include<SPI.h>
 
+#if 1
+#define DBGREG(name, addr, value) {Serial.print("["); Serial.print(__FUNCTION__); Serial.print("(): "); Serial.print(__LINE__); Serial.print(" ] "); Serial.print(name);Serial.print("="); Serial.print(addr,HEX); Serial.print("=");Serial.println(value,HEX);}
+#else
+#define DBGREG(name, addr, value)
+#endif
+
+typedef struct{
+  String reg;
+  uint8_t value;
+}sRegDecrisption_t;
+
 #define LITTLE_ENDIAN 1
 
 /** Mask definitions */
@@ -1225,6 +1236,9 @@ class DFRobot_BMI160{
      * @return BMI160_OK(0) means succse
      */
     int8_t setInt(int intNum);
+	void test();
+	void writeReg(uint8_t reg, void* pBuf, size_t size);
+   size_t readReg(uint8_t reg, void* pBuf, size_t size);
     
     /*
      * @brief enable the step counter

@@ -33,11 +33,15 @@ void setup(){
     while(1);
   }
   
+  bmi160.test();
+  Serial.println("++++++++++++++++++++++++++++");
+  
   //set and init the bmi160 i2c address
   if (bmi160.I2cInit(i2c_addr) != BMI160_OK){
     Serial.println("init false");
     while(1);
   }
+  bmi160.test();
 }
 
 void loop(){  

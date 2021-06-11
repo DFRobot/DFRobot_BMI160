@@ -365,7 +365,7 @@ int8_t DFRobot_BMI160::setAccelPwr(struct bmi160Dev *dev)
 {
   int8_t rslt = 0;
   uint8_t data = 0;
-
+  
   if ((dev->accelCfg.power >= BMI160_ACCEL_SUSPEND_MODE) &&
     (dev->accelCfg.power <= BMI160_ACCEL_LOWPOWER_MODE)) {
     if (dev->accelCfg.power != dev->prevAccelCfg.power) {
@@ -395,7 +395,9 @@ int8_t DFRobot_BMI160::processUnderSampling(uint8_t *data, struct bmi160Dev *dev
 
   rslt = DFRobot_BMI160::getRegs(BMI160_ACCEL_CONFIG_ADDR, data, 1, dev);
   if (rslt == BMI160_OK) {
+       Serial.print("accelCfg.power");Serial.println(dev->accelCfg.power, HEX);
     if (dev->accelCfg.power == BMI160_ACCEL_LOWPOWER_MODE) {
+        Serial.println("+++++++++++++++++++++++++");
       temp = *data & ~BMI160_ACCEL_UNDERSAMPLING_MASK;
       /* Set under-sampling parameter */
       *data = temp | ((1 << 7) & BMI160_ACCEL_UNDERSAMPLING_MASK);
@@ -407,8 +409,9 @@ int8_t DFRobot_BMI160::processUnderSampling(uint8_t *data, struct bmi160Dev *dev
         /* Disable the Pre-filter data*/
         rslt = DFRobot_BMI160::setRegs(BMI160_INT_DATA_0_ADDR, &pre_filter, 2, dev);
     } else {
+      Serial.println("-----------------------------");
       if (*data & BMI160_ACCEL_UNDERSAMPLING_MASK) {
-
+Serial.println("*******************");
         temp = *data & ~BMI160_ACCEL_UNDERSAMPLING_MASK;
         /* disable under-sampling parameter
         if already enabled */
@@ -826,13 +829,51 @@ int8_t DFRobot_BMI160::setRegs(uint8_t reg_addr, uint8_t *data, uint16_t len, st
   return rslt;
 }
 
+void DFRobot_BMI160::writeReg(uint8_t reg, void* pBuf, size_t size){
+  if(pBuf == NULL){
+      return;
+  }
+  
+  uint8_t * _pBuf = (uint8_t *)pBuf;
+
+  Wire.beginTransmission(0x69);
+  Wire.write(&reg,1);
+
+  for(uint16_t i = 0; i < size; i++){
+    Wire.write(_pBuf[i]);
+  }
+  Wire.endTransmission();
+}
+
+size_t DFRobot_BMI160::readReg(uint8_t reg, void* pBuf, size_t size){
+  if(pBuf == NULL){
+    return 0;
+  }
+  uint8_t * _pBuf = (uint8_t *)pBuf;
+  
+  Wire.beginTransmission(0x69);
+  Wire.write(reg);
+  Wire.endTransmission(true);
+  delay(10);
+  Wire.requestFrom(0x69,size);
+
+  for(int i = 0; i < size; i++){
+    _pBuf[i]=Wire.read();
+    delay(1);
+  }
+  return size;
+}
+
 int8_t DFRobot_BMI160::I2cSetRegs(struct bmi160Dev *dev, uint8_t reg_addr, uint8_t *data, uint16_t len)
 {
+  Serial.print("reg=");Serial.print(reg_addr, HEX);
+  Serial.print(", value=");
   if ((dev->prevAccelCfg.power == BMI160_ACCEL_NORMAL_MODE)||(dev->prevGyroCfg.power == BMI160_GYRO_NORMAL_MODE)){
     Wire.beginTransmission(dev->id);
     Wire.write(reg_addr);
     for(int i = 0; i < len; i++){
       Wire.write(data[i]);
+      Serial.println(data[i], HEX);
       delay(1);
     }
     Wire.endTransmission(true);
@@ -841,7 +882,9 @@ int8_t DFRobot_BMI160::I2cSetRegs(struct bmi160Dev *dev, uint8_t reg_addr, uint8
       Wire.beginTransmission(dev->id);
       Wire.write(reg_addr);
       Wire.write(data[i]);
+      
       Wire.endTransmission(true);
+	  Serial.println(data[i], HEX);
       delay(1);
     }
   }
@@ -879,6 +922,7 @@ int8_t DFRobot_BMI160::setInt(int intNum)
 int8_t DFRobot_BMI160::setInt(struct bmi160Dev *dev, int intNum)
 {
   int8_t rslt=BMI160_OK;
+  Serial.println("INT begin+++++++++++++++++++++++++++++");
   if (dev == NULL){
     rslt = BMI160_E_NULL_PTR;
   }
@@ -905,6 +949,7 @@ int8_t DFRobot_BMI160::setInt(struct bmi160Dev *dev, int intNum)
   intConfig.intTypeCfg.accStepDetectInt.stepDetectorMode = BMI160_STEP_DETECT_NORMAL;
   intConfig.intTypeCfg.accStepDetectInt.stepDetectorEn = BMI160_ENABLE;// 1-enable, 0-disable the step detector
   rslt = DFRobot_BMI160::setIntConfig(&intConfig, dev);
+  Serial.println("INT begin----------------------------------------");
   return rslt;
 }
 
@@ -1317,4 +1362,74 @@ int8_t DFRobot_BMI160::readStepCounter(uint16_t *stepVal, struct bmi160Dev *dev)
   return rslt; 
 }
 
+static sRegDecrisption_t REGMap[] = {
+{"BMI160_CHIP_ID_ADDR          ", 0x00},
+{"BMI160_ERROR_REG_ADDR        ", 0x02},
+{"BMI160_AUX_DATA_ADDR         ", 0x04},
+{"BMI160_GYRO_DATA_ADDR        ", 0x0C},
+{"BMI160_ACCEL_DATA_ADDR       ", 0x12},
+{"BMI160_STATUS_ADDR           ", 0x1B},
+{"BMI160_INT_STATUS_ADDR       ", 0x1C},
+{"BMI160_FIFO_LENGTH_ADDR      ", 0x22},
+{"BMI160_FIFO_DATA_ADDR        ", 0x24},
+{"BMI160_ACCEL_CONFIG_ADDR     ", 0x40},
+{"BMI160_ACCEL_RANGE_ADDR      ", 0x41},
+{"BMI160_GYRO_CONFIG_ADDR      ", 0x42},
+{"BMI160_GYRO_RANGE_ADDR       ", 0x43},
+{"BMI160_AUX_ODR_ADDR          ", 0x44},
+{"BMI160_FIFO_DOWN_ADDR        ", 0x45},
+{"BMI160_FIFO_CONFIG_0_ADDR    ", 0x46},
+{"BMI160_FIFO_CONFIG_1_ADDR    ", 0x47},
+{"BMI160_AUX_IF_0_ADDR         ", 0x4B},
+{"BMI160_AUX_IF_1_ADDR         ", 0x4C},
+{"BMI160_AUX_IF_2_ADDR         ", 0x4D},
+{"BMI160_AUX_IF_3_ADDR         ", 0x4E},
+{"BMI160_AUX_IF_4_ADDR         ", 0x4F},
+{"BMI160_INT_ENABLE_0_ADDR     ", 0x50},
+{"BMI160_INT_ENABLE_1_ADDR     ", 0x51},
+{"BMI160_INT_ENABLE_2_ADDR     ", 0x52},
+{"BMI160_INT_OUT_CTRL_ADDR     ", 0x53},
+{"BMI160_INT_LATCH_ADDR        ", 0x54},
+{"BMI160_INT_MAP_0_ADDR        ", 0x55},
+{"BMI160_INT_MAP_1_ADDR        ", 0x56},
+{"BMI160_INT_MAP_2_ADDR        ", 0x57},
+{"BMI160_INT_DATA_0_ADDR       ", 0x58},
+{"BMI160_INT_DATA_1_ADDR       ", 0x59},
+{"BMI160_INT_LOWHIGH_0_ADDR    ", 0x5A},
+{"BMI160_INT_LOWHIGH_1_ADDR    ", 0x5B},
+{"BMI160_INT_LOWHIGH_2_ADDR    ", 0x5C},
+{"BMI160_INT_LOWHIGH_3_ADDR    ", 0x5D},
+{"BMI160_INT_LOWHIGH_4_ADDR    ", 0x5E},
+{"BMI160_INT_MOTION_0_ADDR     ", 0x5F},
+{"BMI160_INT_MOTION_1_ADDR     ", 0x60},
+{"BMI160_INT_MOTION_2_ADDR     ", 0x61},
+{"BMI160_INT_MOTION_3_ADDR     ", 0x62},
+{"BMI160_INT_TAP_0_ADDR        ", 0x63},
+{"BMI160_INT_TAP_1_ADDR        ", 0x64},
+{"BMI160_INT_ORIENT_0_ADDR     ", 0x65},
+{"BMI160_INT_ORIENT_1_ADDR     ", 0x66},
+{"BMI160_INT_FLAT_0_ADDR       ", 0x67},
+{"BMI160_INT_FLAT_1_ADDR       ", 0x68},
+{"BMI160_FOC_CONF_ADDR         ", 0x69},
+{"BMI160_CONF_ADDR             ", 0x6A},
+{"BMI160_IF_CONF_ADDR          ", 0x6B},
+{"BMI160_SELF_TEST_ADDR        ", 0x6D},
+{"BMI160_OFFSET_ADDR           ", 0x71},
+{"BMI160_OFFSET_CONF_ADDR      ", 0x77},
+{"BMI160_INT_STEP_CNT_0_ADDR   ", 0x78},
+{"BMI160_INT_STEP_CONFIG_0_ADDR", 0x7A},
+{"BMI160_INT_STEP_CONFIG_1_ADDR", 0x7B},
+{"BMI160_COMMAND_REG_ADDR      ", 0x7E},
+{"BMI160_SPI_COMM_TEST_ADDR    ", 0x7F},
+{"BMI160_INTL_PULLUP_CONF_ADDR ", 0x85},
+};
 
+void DFRobot_BMI160::test(){
+  uint8_t val;
+  for (int i = 0; i < sizeof(REGMap)/sizeof(sRegDecrisption_t);i++){
+      readReg(REGMap[i].value, &val, 1);
+      DBGREG(REGMap[i].reg, REGMap[i].value, val);
+      delay(2);
+  }
+  
+}
