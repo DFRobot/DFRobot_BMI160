@@ -1,40 +1,17 @@
-/*
-===============================================
-BMI160 accelerometer/gyroscope library for Intel(R) Curie(TM) devices.
-Copyright (c) 2015 Intel Corporation.  All rights reserved.
-
-Based on MPU6050 Arduino library provided by Jeff Rowberg as part of his
-excellent I2Cdev device library: https://github.com/jrowberg/i2cdevlib
-
-===============================================
-I2Cdev device library code is placed under the MIT license
-Copyright (c) 2012 Jeff Rowberg
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-===============================================
-*/
+/*!
+ * @file DFRobot_BMI160.h
+ * @brief Define the basic structure of class DFRobot_BMI160 
+ * @copyright	Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+ * @license The MIT License (MIT)
+ * @author  DFRobot_haoJ(hao.jiang@dfrobot.com)
+ * @version V1.0
+ * @date 2017-12-01
+ * @url https://github.com/DFRobot/DFRobot_BMI160
+ */
 
 #include<arduino.h>
 #include<Wire.h>
 #include<SPI.h>
-
-
 
 #define LITTLE_ENDIAN 1
 
@@ -272,7 +249,7 @@ THE SOFTWARE.
 #define BMI160_FOC_FAILURE      INT8_C(-11)
 #define BMI160_ERR_CHOOSE      INT8_C(-12)
 
-/**\name API warning codes */
+/** name API warning codes */
 #define BMI160_W_GYRO_SELF_TEST_FAIL  INT8_C(1)
 #define BMI160_W_ACCEl_SELF_TEST_FAIL INT8_C(2)
 
@@ -612,650 +589,425 @@ THE SOFTWARE.
 #define BMI160_GET_LSB(var) (uint8_t)(var & BMI160_SET_LOW_BYTE)
 #define BMI160_GET_MSB(var) (uint8_t)((var & BMI160_SET_HIGH_BYTE) >> 8)
 
-/*!
- *  @brief This structure holds the information for usage of
- *  FIFO by the user.
- */
-//struct bmi160_fifo_frame {
+/**
+  * @struct bmi160FifoFrame
+  * @brief This structure holds the information for usage of FIFO by the user.
+  */
 struct bmi160FifoFrame {
-  /*! Data buffer of user defined length is to be mapped here */
-  uint8_t *data;
-  /*! While calling the API  "bmi160_get_fifo_data" , length stores
-   *  number of bytes in FIFO to be read (specified by user as input)
-   *  and after execution of the API ,number of FIFO data bytes
-   *  available is provided as an output to user
-   */
-  uint16_t length;
-  /*! FIFO time enable */
-  //uint8_t fifo_time_enable;
-  uint8_t fifoTimeEnable;
-  /*! Enabling of the FIFO header to stream in header mode */
-  //uint8_t fifo_header_enable;
-  uint8_t fifoHeaderEnable;
-  /*! Streaming of the Accelerometer, Gyroscope
-  sensor data or both in FIFO */
-  //uint8_t fifo_data_enable;
-  uint8_t fifoDataEnable;
-  /*! Will be equal to length when no more frames are there to parse */
-  //uint16_t accel_byte_start_idx;
-  uint16_t accelByteStartIdx;
-  /*! Will be equal to length when no more frames are there to parse */
-  //uint16_t gyro_byte_start_idx;
-  uint16_t gyroByteStartIdx;
-  /*! Will be equal to length when no more frames are there to parse */
-  //uint16_t aux_byte_start_idx;
-  uint16_t auxByteStartIdx;
-  /*! Value of FIFO sensor time time */
-  //uint32_t sensor_time;
-  uint32_t sensorTime;
-  /*! Value of Skipped frame counts */
-  //uint8_t skipped_frame_count;
-  uint8_t skippedFrameCount;
+  uint8_t *data;             /**< Data buffer of user defined length is to be mapped here */
+  uint16_t length;           /**< While calling the API  "bmi160_get_fifo_data" , length stores number of bytes in FIFO to be read (specified by user as input) and after execution of the API ,number of FIFO data bytes available is provided as an output to user*/
+  uint8_t fifoTimeEnable;    /**< FIFO time enable */
+  uint8_t fifoHeaderEnable;  /**< Enabling of the FIFO header to stream in header mode */
+  uint8_t fifoDataEnable;    /**< Streaming of the Accelerometer, Gyroscope sensor data or both in FIFO */
+  uint16_t accelByteStartIdx;/**< Will be equal to length when no more frames are there to parse */
+  uint16_t gyroByteStartIdx; /**< Will be equal to length when no more frames are there to parse */
+  uint16_t auxByteStartIdx;  /**< Will be equal to length when no more frames are there to parse */
+  uint32_t sensorTime;       /**< Value of FIFO sensor time time */
+  uint8_t skippedFrameCount; /**< Value of Skipped frame counts */
 };
 
-/*!
+/**
+ * @enum eBmi160AnySigMotionActiveInterruptState
  * @brief bmi160 active state of any & sig motion interrupt.
  */
-//enum bmi160_any_sig_motion_active_interrupt_state {
-enum eBmi160AnySigMotionActiveInterruptState {
-  /*! Both any & sig motion are disabled */
-  //BMI160_BOTH_ANY_SIG_MOTION_DISABLED = -1,
-  eBmi160BothAnySigMotionDisabled = -1,
-  /*! Any-motion selected */
-  //BMI160_ANY_MOTION_ENABLED,
-  eBmi160AnyMotionEnabled,
-  /*! Sig-motion selected */
-  //BMI160_SIG_MOTION_ENABLED
-  eBmi160SigMotionEnabled
+enum eBmi160AnySigMotionActiveInterruptState { 
+  eBmi160BothAnySigMotionDisabled = -1, /**< Both any & sig motion are disabled */
+  eBmi160AnyMotionEnabled,              /**< Any-motion selected */
+  eBmi160SigMotionEnabled               /**< Sig-motion selected */
 };
 
-/*!
+/**
+ * @enum eBmi160SelectSensor
  * @brief bmi160 sensor select structure
  */
-//enum bmi160_select_sensor {
 enum eBmi160SelectSensor {
-  //BMI160_ACCEL_ONLY = 1,
   eBmi160AccelOnly = 1,
-  //BMI160_GYRO_ONLY,
   eBmi160GyroOnly,
-  //BMI160_BOTH_ACCEL_AND_GYRO
   eBmi160BothAccelAndGyro
 };
 
-/*!
+/**
+ * @struct bmi160Cfg
  * @brief bmi160 sensor configuration structure
  */
-//struct bmi160_cfg {
 struct bmi160Cfg {
-  /*! power mode */
-  uint8_t power;
-  /*! output data rate */
-  uint8_t odr;
-  /*! range */
-  uint8_t range;
-  /*! bandwidth */
-  uint8_t bw;
+  uint8_t power;  /**< power mode */
+  uint8_t odr;    /**< output data rate */
+  uint8_t range;  /**< range */
+  uint8_t bw;     /**< bandwidth */
 };
 
-/*!
+/**
  * @brief Aux sensor configuration structure
  */
-//struct bmi160_aux_cfg {
 struct bmi160AuxCfg {
-  /*! Aux sensor, 1 - enable 0 - disable */
-  //uint8_t aux_sensor_enable : 1;
-  uint8_t auxSensorEnable : 1;
-  /*! Aux manual/auto mode status */
-  //uint8_t manual_enable : 1;
-  uint8_t manualEnable : 1;
-  /*! Aux read burst length */
-  //uint8_t aux_rd_burst_len : 2;
-  uint8_t auxRdBurstLen : 2;
-  /*! output data rate */
-  //uint8_t aux_odr :4;
-  uint8_t auxOdr :4;
-  /*! i2c addr of auxiliary sensor */
-  //uint8_t aux_i2c_addr;
-  uint8_t auxI2cAddr;
+  uint8_t auxSensorEnable : 1;  /**< Aux sensor, 1 - enable 0 - disable */
+  uint8_t manualEnable : 1;     /**< Aux manual/auto mode status */
+  uint8_t auxRdBurstLen : 2;    /**< Aux read burst length */
+  uint8_t auxOdr :4;            /**< output data rate */
+  uint8_t auxI2cAddr;           /**< i2c addr of auxiliary sensor */
 };
 
 /* type definitions */
 typedef int8_t (*bmi160ComFptrT)(uint8_t dev_addr, uint8_t reg_addr, uint8_t *data, uint16_t len);
 typedef void (*bmi160DelayFptrT)(uint32_t period);
 
-//struct bmi160_dev {
 struct bmi160Dev {
-  /*! Chip Id */
-  //uint8_t chip_id;
-  uint8_t chipId;
-  /*! Device Id */
-  uint8_t id;
-  /*! 0 - I2C , 1 - SPI Interface */
-  uint8_t interface;
-  /*! Hold active interrupts status for any and sig motion
-   *  0 - Any-motion enable, 1 - Sig-motion enable,
-   *  -1 neither any-motion nor sig-motion selected */
-  enum eBmi160AnySigMotionActiveInterruptState any_sig_sel;
-  /*! Structure to configure Accel sensor */
-  struct bmi160Cfg accelCfg;
-  /*! Structure to hold previous/old accel config parameters.
-   * This is used at driver level to prevent overwriting of same
-   * data, hence user does not change it in the code */
-  struct bmi160Cfg prevAccelCfg;
-  /*! Structure to configure Gyro sensor */
-  struct bmi160Cfg gyroCfg;
-  /*! Structure to hold previous/old gyro config parameters.
-   * This is used at driver level to prevent overwriting of same
-   * data, hence user does not change it in the code */
-  struct bmi160Cfg prevGyroCfg;
-  /*! Structure to configure the auxiliary sensor */
-  struct bmi160AuxCfg auxCfg;
-  /*! Structure to hold previous/old aux config parameters.
-   * This is used at driver level to prevent overwriting of same
-   * data, hence user does not change it in the code */
-  struct bmi160AuxCfg prevAuxCfg;
-   /*! FIFO related configurations */
-  struct bmi160FifoFrame *fifo;
-  /*! Read function pointer */
-  bmi160ComFptrT read;
-  /*! Write function pointer */
-  bmi160ComFptrT write;
-  /*!  Delay function pointer */
-  bmi160DelayFptrT delayMs;
+  uint8_t chipId;   /**< Chip Id */
+  uint8_t id;       /**< Device Id */
+  uint8_t interface;/**< 0 - I2C , 1 - SPI Interface */
+  enum eBmi160AnySigMotionActiveInterruptState any_sig_sel;/**< Hold active interrupts status for any and sig motion 0 - Any-motion enable, 1 - Sig-motion enable,  -1 neither any-motion nor sig-motion selected */
+  struct bmi160Cfg accelCfg;                               /**< Structure to configure Accel sensor */
+  struct bmi160Cfg prevAccelCfg;/**< Structure to hold previous/old accel config parameters.This is used at driver level to prevent overwriting of samedata, hence user does not change it in the code */
+  struct bmi160Cfg gyroCfg;     /**< Structure to configure Gyro sensor */
+  struct bmi160Cfg prevGyroCfg; /**< Structure to hold previous/old gyro config parameters.This is used at driver level to prevent overwriting of same data, hence user does not change it in the code */
+  struct bmi160AuxCfg auxCfg;   /**< Structure to configure the auxiliary sensor */
+  struct bmi160AuxCfg prevAuxCfg;/**< Structure to hold previous/old aux config parameters.This is used at driver level to prevent overwriting of samedata, hence user does not change it in the code */
+  struct bmi160FifoFrame *fifo; /**< FIFO related configurations */
+  bmi160ComFptrT read;          /**< Read function pointer */
+  bmi160ComFptrT write;         /**< Write function pointer */
+  bmi160DelayFptrT delayMs;     /**<  Delay function pointer */
 };
 
-/*!
+/**
  * @brief bmi160 sensor data structure which comprises of accel data
  */
-//struct bmi160_sensor_data {
 struct bmi160SensorData {
-  /*! X-axis sensor data */
-  int16_t x;
-  /*! Y-axis sensor data */
-  int16_t y;
-  /*! Z-axis sensor data */
-  int16_t z;
-  /*! sensor time */
-  uint32_t sensortime;
+  int16_t x;           /**< X-axis sensor data */
+  int16_t y;           /**< Y-axis sensor data */
+  int16_t z;           /**< Z-axis sensor data */
+  uint32_t sensortime; /**< sensor time */
 };
 
 enum bmi160IntChannel {
-  /*! Un-map both channels */
-  BMI160_INT_CHANNEL_NONE,
-  /*! interrupt Channel 1 */
-  BMI160_INT_CHANNEL_1,
-  /*! interrupt Channel 2 */
-  BMI160_INT_CHANNEL_2,
-  /*! Map both channels */
-  BMI160_INT_CHANNEL_BOTH
+  BMI160_INT_CHANNEL_NONE, /**< Un-map both channels */
+  BMI160_INT_CHANNEL_1,    /**< interrupt Channel 1 */
+  BMI160_INT_CHANNEL_2,    /**< interrupt Channel 2 */
+  BMI160_INT_CHANNEL_BOTH  /**< Map both channels */
 };
 
 enum bmi160IntTypes {
-  /*! Slope/Any-motion interrupt */
-  BMI160_ACC_ANY_MOTION_INT,
-  /*! Significant motion interrupt */
-  BMI160_ACC_SIG_MOTION_INT,
-  /*! Step detector interrupt */
-  BMI160_STEP_DETECT_INT,
-  /*! double tap interrupt */
-  BMI160_ACC_DOUBLE_TAP_INT,
-  /*! single tap interrupt */
-  BMI160_ACC_SINGLE_TAP_INT,
-  /*! orientation interrupt */
-  BMI160_ACC_ORIENT_INT,
-  /*! flat interrupt */
-  BMI160_ACC_FLAT_INT,
-  /*! high-g interrupt */
-  BMI160_ACC_HIGH_G_INT,
-  /*! low-g interrupt */
-  BMI160_ACC_LOW_G_INT,
-  /*! slow/no-motion interrupt */
-  BMI160_ACC_SLOW_NO_MOTION_INT,
-  /*! data ready interrupt  */
-  BMI160_ACC_GYRO_DATA_RDY_INT,
-  /*! fifo full interrupt */
-  BMI160_ACC_GYRO_FIFO_FULL_INT,
-  /*! fifo watermark interrupt */
-  BMI160_ACC_GYRO_FIFO_WATERMARK_INT
+  BMI160_ACC_ANY_MOTION_INT,         /**< Slope/Any-motion interrupt */
+  BMI160_ACC_SIG_MOTION_INT,         /**< Significant motion interrupt */
+  BMI160_STEP_DETECT_INT,            /**< Step detector interrupt */
+  BMI160_ACC_DOUBLE_TAP_INT,         /**< double tap interrupt */
+  BMI160_ACC_SINGLE_TAP_INT,         /**< single tap interrupt */
+  BMI160_ACC_ORIENT_INT,             /**< orientation interrupt */
+  BMI160_ACC_FLAT_INT,               /**< flat interrupt */
+  BMI160_ACC_HIGH_G_INT,             /**< high-g interrupt */
+  BMI160_ACC_LOW_G_INT,              /**< low-g interrupt */
+  BMI160_ACC_SLOW_NO_MOTION_INT,     /**< slow/no-motion interrupt */
+  BMI160_ACC_GYRO_DATA_RDY_INT,      /**< data ready interrupt  */
+  BMI160_ACC_GYRO_FIFO_FULL_INT,     /**< fifo full interrupt */
+  BMI160_ACC_GYRO_FIFO_WATERMARK_INT /**< fifo watermark interrupt */
 };
 
 struct bmi160IntPinSettg {
 #if LITTLE_ENDIAN == 1
-  /*! To enable either INT1 or INT2 pin as output.
-   * 0- output disabled ,1- output enabled */
-  uint16_t outputEn :1;
-  /*! 0 - push-pull 1- open drain,only valid if outputEn is set 1 */
-  uint16_t outputMode :1;
-  /*! 0 - active low , 1 - active high level.
-   * if outputEn is 1,this applies to interrupts,else PMU_trigger */
-  uint16_t outputType :1;
-  /*! 0 - level trigger , 1 - edge trigger  */
-  uint16_t edgeCtrl :1;
-  /*! To enable either INT1 or INT2 pin as input.
-   * 0 - input disabled ,1 - input enabled */
-  uint16_t inputEn :1;
-  /*! latch duration*/
-  uint16_t latchDur :4;
+  
+  uint16_t outputEn :1;   /**< To enable either INT1 or INT2 pin as output. 0- output disabled ,1- output enabled */
+  uint16_t outputMode :1; /**< 0 - push-pull 1- open drain,only valid if outputEn is set 1 */
+  uint16_t outputType :1; /**< 0 - active low , 1 - active high level. if outputEn is 1,this applies to interrupts,else PMU_trigger */
+  uint16_t edgeCtrl :1;   /**< 0 - level trigger , 1 - edge trigger  */
+  uint16_t inputEn :1;    /**< To enable either INT1 or INT2 pin as input. 0 - input disabled ,1 - input enabled */
+  uint16_t latchDur :4;   /**< latch duration*/
 #elif BIG_ENDIAN == 1
-  /*! latch duration*/
-  uint16_t latchDur : 4;
-  /*! Latched,non-latched or temporary interrupt modes */
-  uint16_t inputEn : 1;
-  /*! 1 - edge trigger, 0 - level trigger */
-  uint16_t edgeCtrl : 1;
-  /*! 0 - active low , 1 - active high level.
-   * if outputEn is 1,this applies to interrupts,else PMU_trigger */
-  uint16_t outputType : 1;
-  /*! 0 - push-pull , 1 - open drain,only valid if outputEn is set 1 */
-  uint16_t outputMode : 1;
-  /*! To enable either INT1 or INT2 pin as output.
-   * 0 - output disabled , 1 - output enabled */
-  uint16_t outputEn : 1;
+  uint16_t latchDur : 4;  /**< latch duration*/
+  uint16_t inputEn : 1;   /**< Latched,non-latched or temporary interrupt modes */
+  uint16_t edgeCtrl : 1;  /**< 1 - edge trigger, 0 - level trigger */
+  uint16_t outputType : 1;/**< 0 - active low , 1 - active high level. if outputEn is 1,this applies to interrupts,else PMU_trigger */
+  uint16_t outputMode : 1;/**< 0 - push-pull , 1 - open drain,only valid if outputEn is set 1 */
+  uint16_t outputEn : 1;  /**< To enable either INT1 or INT2 pin as output. 0 - output disabled , 1 - output enabled */
 #endif
 };
 
 struct bmi160AccTapIntCfg {
 #if LITTLE_ENDIAN == 1
-  /*! tap threshold */
-  uint16_t tapThr :5;
-  /*! tap shock */
-  uint16_t tapShock :1;
-  /*! tap quiet */
-  uint16_t tapQuiet :1;
-  /*! tap duration */
-  uint16_t tapDur :3;
-  /*! data source 0- filter & 1 pre-filter*/
-  uint16_t tapDataSrc :1;
-  /*! tap enable, 1 - enable, 0 - disable */
-  uint16_t tapEn :1;
+  uint16_t tapThr :5;     /**< tap threshold */
+  uint16_t tapShock :1;   /**< tap shock */
+  uint16_t tapQuiet :1;   /**< tap quiet */
+  uint16_t tapDur :3;     /**< tap duration */
+  uint16_t tapDataSrc :1; /**< data source 0- filter & 1 pre-filter*/
+  uint16_t tapEn :1;      /**< tap enable, 1 - enable, 0 - disable */
 #elif BIG_ENDIAN == 1
-  /*! tap enable, 1 - enable, 0 - disable */
-  uint16_t tapEn :1;
-  /*! data source 0- filter & 1 pre-filter*/
-  uint16_t tapDataSrc :1;
-  /*! tap duration */
-  uint16_t tapDur : 3;
-  /*! tap quiet */
-  uint16_t tapQuiet : 1;
-  /*! tap shock */
-  uint16_t tapShock : 1;
-  /*! tap threshold */
-  uint16_t tapThr : 5;
+  uint16_t tapEn :1;     /**< tap enable, 1 - enable, 0 - disable */
+  uint16_t tapDataSrc :1;/**< data source 0- filter & 1 pre-filter*/
+  uint16_t tapDur : 3;   /**< tap duration */
+  uint16_t tapQuiet : 1; /**< tap quiet */
+  uint16_t tapShock : 1; /**< tap shock */
+  uint16_t tapThr : 5;   /**< tap threshold */
 #endif
 };
 
 struct bmi160AccAnyMotIntCfg {
 #if LITTLE_ENDIAN == 1
-  /*! 1 any-motion enable, 0 - any-motion disable */
-  uint8_t anymotionEn :1;
-  /*! slope interrupt x, 1 - enable, 0 - disable */
-  uint8_t anymotionX :1;
-  /*! slope interrupt y, 1 - enable, 0 - disable */
-  uint8_t anymotionY :1;
-  /*! slope interrupt z, 1 - enable, 0 - disable */
-  uint8_t anymotionZ :1;
-  /*! slope duration */
-  uint8_t anymotionDur :2;
-  /*! data source 0- filter & 1 pre-filter*/
-  uint8_t anymotionDataSrc :1;
-  /*! slope threshold */
-  uint8_t anymotionThr;
+  uint8_t anymotionEn :1;     /**< 1 any-motion enable, 0 - any-motion disable */
+  uint8_t anymotionX :1;      /**< slope interrupt x, 1 - enable, 0 - disable */
+  uint8_t anymotionY :1;      /**< slope interrupt y, 1 - enable, 0 - disable */
+  uint8_t anymotionZ :1;      /**< slope interrupt z, 1 - enable, 0 - disable */
+  uint8_t anymotionDur :2;    /**< slope duration */
+  uint8_t anymotionDataSrc :1;/**< data source 0- filter & 1 pre-filter*/
+  uint8_t anymotionThr;       /**< slope threshold */
 #elif BIG_ENDIAN == 1
-  /*! slope threshold */
-  uint8_t anymotionThr;
-  /*! data source 0- filter & 1 pre-filter*/
-  uint8_t anymotionDataSrc :1;
-  /*! slope duration */
-  uint8_t anymotionDur : 2;
-  /*! slope interrupt z, 1 - enable, 0 - disable */
-  uint8_t anymotionZ : 1;
-  /*! slope interrupt y, 1 - enable, 0 - disable */
-  uint8_t anymotionY : 1;
-  /*! slope interrupt x, 1 - enable, 0 - disable */
-  uint8_t anymotionX : 1;
-  /*! 1 any-motion enable, 0 - any-motion disable */
-  uint8_t anymotionEn :1;
+  
+  uint8_t anymotionThr;       /**< slope threshold */
+  uint8_t anymotionDataSrc :1;/**< data source 0- filter & 1 pre-filter*/
+  uint8_t anymotionDur : 2;   /**< slope duration */
+  uint8_t anymotionZ : 1;     /**< slope interrupt z, 1 - enable, 0 - disable */
+  uint8_t anymotionY : 1;     /**< slope interrupt y, 1 - enable, 0 - disable */
+  uint8_t anymotionX : 1;     /**< slope interrupt x, 1 - enable, 0 - disable */
+  uint8_t anymotionEn :1;     /**< 1 any-motion enable, 0 - any-motion disable */
 #endif
 };
 
 struct bmi160AccSigMotIntCfg {
 #if LITTLE_ENDIAN == 1
-  /*! skip time of sig-motion interrupt */
-  uint8_t sigMotSkip :2;
-  /*! proof time of sig-motion interrupt */
-  uint8_t sigMotProof :2;
-  /*! data source 0- filter & 1 pre-filter*/
-  uint8_t sigDataSrc :1;
-  /*! 1 - enable sig, 0 - disable sig & enable anymotion */
-  uint8_t sigEn :1;
-  /*! sig-motion threshold */
-  uint8_t sigMotThres;
+  uint8_t sigMotSkip :2;  /**< skip time of sig-motion interrupt */
+  uint8_t sigMotProof :2; /**< proof time of sig-motion interrupt */
+  uint8_t sigDataSrc :1;  /**< data source 0- filter & 1 pre-filter*/
+  uint8_t sigEn :1;       /**< 1 - enable sig, 0 - disable sig & enable anymotion */
+  uint8_t sigMotThres;    /**< sig-motion threshold */
 #elif BIG_ENDIAN == 1
-  /*! sig-motion threshold */
-  uint8_t sigMotThres;
-  /*! 1 - enable sig, 0 - disable sig & enable anymotion */
-  uint8_t sigEn :1;
-  /*! data source 0- filter & 1 pre-filter*/
-  uint8_t sigDataSrc :1;
-  /*! proof time of sig-motion interrupt */
-  uint8_t sigMotProof : 2;
-  /*! skip time of sig-motion interrupt */
-  uint8_t sigMotSkip : 2;
+  
+  uint8_t sigMotThres;    /**< sig-motion threshold */
+  uint8_t sigEn :1;       /**< 1 - enable sig, 0 - disable sig & enable anymotion */
+  uint8_t sigDataSrc :1;  /**< data source 0- filter & 1 pre-filter*/
+  uint8_t sigMotProof : 2;/**< proof time of sig-motion interrupt */
+  uint8_t sigMotSkip : 2; /**< skip time of sig-motion interrupt */
 #endif
 };
 
 struct bmi160AccStepDetectIntCfg {
 #if LITTLE_ENDIAN == 1
-  /*! 1- step detector enable, 0- step detector disable */
-  uint16_t stepDetectorEn :1;
-  /*! minimum threshold */
-  uint16_t minThreshold :2;
-  /*! minimal detectable step time */
-  uint16_t steptimeMin :3;
-  /*! enable step counter mode setting */
-  uint16_t stepDetectorMode :2;
-  /*! minimum step buffer size*/
-  uint16_t stepMinBuf :3;
+  uint16_t stepDetectorEn :1;  /**< 1- step detector enable, 0- step detector disable */
+  uint16_t minThreshold :2;    /**< minimum threshold */
+  uint16_t steptimeMin :3;     /**< minimal detectable step time */
+  uint16_t stepDetectorMode :2;/**< enable step counter mode setting */
+  uint16_t stepMinBuf :3;      /**< minimum step buffer size*/
 #elif BIG_ENDIAN == 1
-  /*! minimum step buffer size*/
-  uint16_t stepMinBuf :3;
-  /*! enable step counter mode setting */
-  uint16_t stepDetectorMode : 2;
-  /*! minimal detectable step time */
-  uint16_t steptimeMin : 3;
-  /*! minimum threshold */
-  uint16_t minThreshold : 2;
-  /*! 1- step detector enable, 0- step detector disable */
-  uint16_t stepDetectorEn :1;
+  uint16_t stepMinBuf :3;       /**< minimum step buffer size*/
+  uint16_t stepDetectorMode : 2;/**< enable step counter mode setting */
+  uint16_t steptimeMin : 3;     /**< minimal detectable step time */
+  uint16_t minThreshold : 2;    /**< minimum threshold */
+  uint16_t stepDetectorEn :1;   /**< 1- step detector enable, 0- step detector disable */
 #endif
 };
 
 struct bmi160AccNoMotionIntCfg {
 #if LITTLE_ENDIAN == 1
-  /*! no motion interrupt x */
-  uint16_t noMotionX :1;
-  /*! no motion interrupt y */
-  uint16_t noMotionY :1;
-  /*! no motion interrupt z */
-  uint16_t noMotionZ :1;
-  /*! no motion duration */
-  uint16_t noMotionDur :6;
-  /*! no motion sel , 1 - enable no-motion ,0- enable slow-motion */
-  uint16_t noMotionSel :1;
-  /*! data source 0- filter & 1 pre-filter*/
-  uint16_t noMotionSrc :1;
-  /*! no motion threshold */
-  uint8_t noMotionThres;
+  uint16_t noMotionX :1;  /**< no motion interrupt x */
+  uint16_t noMotionY :1;  /**< no motion interrupt y */
+  uint16_t noMotionZ :1;  /**< no motion interrupt z */
+  uint16_t noMotionDur :6;/**< no motion duration */
+  uint16_t noMotionSel :1;/**< no motion sel , 1 - enable no-motion ,0- enable slow-motion */
+  uint16_t noMotionSrc :1;/**< data source 0- filter & 1 pre-filter*/
+  uint8_t noMotionThres;  /**< no motion threshold */
 #elif BIG_ENDIAN == 1
-  /*! no motion threshold */
-  uint8_t noMotionThres;
-  /*! data source 0- filter & 1 pre-filter*/
-  uint16_t noMotionSrc :1;
-  /*! no motion sel , 1 - enable no-motion ,0- enable slow-motion */
-  uint16_t noMotionSel : 1;
-  /*! no motion duration */
-  uint16_t noMotionDur : 6;
-  /* no motion interrupt z */
-  uint16_t noMotionZ :1;
-  /*! no motion interrupt y */
-  uint16_t noMotionY :1;
-  /*! no motion interrupt x */
-  uint16_t noMotionX :1;
+  uint8_t noMotionThres;   /**< no motion threshold */
+  uint16_t noMotionSrc :1; /**< data source 0- filter & 1 pre-filter*/
+  uint16_t noMotionSel : 1;/**< no motion sel , 1 - enable no-motion ,0- enable slow-motion */
+  uint16_t noMotionDur : 6;/**< no motion duration */
+  uint16_t noMotionZ :1;   /**< no motion interrupt z */
+  uint16_t noMotionY :1;   /**< no motion interrupt y */
+  uint16_t noMotionX :1;   /**< no motion interrupt x */
 #endif
 };
 
 struct bmi160AccOrientIntCfg {
 #if LITTLE_ENDIAN == 1
-  /*! thresholds for switching between the different orientations */
-  uint16_t orientMode :2;
-  /*! blocking_mode */
-  uint16_t orientBlocking :2;
-  /*! Orientation interrupt hysteresis */
-  uint16_t orientHyst :4;
-  /*! Orientation interrupt theta */
-  uint16_t orientTheta :6;
-  /*! Enable/disable Orientation interrupt */
-  uint16_t orientUdEn :1;
-  /*! exchange x- and z-axis in algorithm ,0 - z, 1 - x */
-  uint16_t axesEx :1;
-  /*! 1 - orient enable, 0 - orient disable */
-  uint8_t orientEn :1;
+  uint16_t orientMode :2;    /**< thresholds for switching between the different orientations */
+  uint16_t orientBlocking :2;/**< blocking_mode */
+  uint16_t orientHyst :4;    /**< Orientation interrupt hysteresis */
+  uint16_t orientTheta :6;   /**< Orientation interrupt theta */
+  uint16_t orientUdEn :1;    /**< Enable/disable Orientation interrupt */
+  uint16_t axesEx :1;        /**< exchange x- and z-axis in algorithm ,0 - z, 1 - x */
+  uint8_t orientEn :1;       /**< 1 - orient enable, 0 - orient disable */
 #elif BIG_ENDIAN == 1
-  /*! 1 - orient enable, 0 - orient disable */
-  uint8_t orientEn :1;
-  /*! exchange x- and z-axis in algorithm ,0 - z, 1 - x */
-  uint16_t axesEx : 1;
-  /*! Enable/disable Orientation interrupt */
-  uint16_t orientUdEn : 1;
-  /*! Orientation interrupt theta */
-  uint16_t orientTheta : 6;
-  /*! Orientation interrupt hysteresis */
-  uint16_t orientHyst : 4;
-  /*! blocking_mode */
-  uint16_t orientBlocking : 2;
-  /*! thresholds for switching between the different orientations */
-  uint16_t orientMode : 2;
+  uint8_t orientEn :1;        /**< 1 - orient enable, 0 - orient disable */
+  uint16_t axesEx : 1;        /**< exchange x- and z-axis in algorithm ,0 - z, 1 - x */
+  uint16_t orientUdEn : 1;    /**< Enable/disable Orientation interrupt */
+  uint16_t orientTheta : 6;   /**< Orientation interrupt theta */
+  uint16_t orientHyst : 4;    /**< Orientation interrupt hysteresis */
+  uint16_t orientBlocking : 2;/**< blocking_mode */
+  uint16_t orientMode : 2;    /**< thresholds for switching between the different orientations */
 #endif
 };
 
 struct bmi160AccFlatDetectIntCfg {
 #if LITTLE_ENDIAN == 1
-  /*! flat threshold */
-  uint16_t flatTheta :6;
-  /*! flat interrupt hysteresis */
-  uint16_t flatHy :3;
-  /*! delay time for which the flat value must remain stable for the
-   * flat interrupt to be generated */
-  uint16_t flatHoldTime :2;
-  /*! 1 - flat enable, 0 - flat disable */
-  uint16_t flatEn :1;
+  
+  uint16_t flatTheta :6;    /**< flat threshold */
+  uint16_t flatHy :3;       /**< flat interrupt hysteresis */
+  uint16_t flatHoldTime :2; /**< delay time for which the flat value must remain stable for the flat interrupt to be generated */
+  uint16_t flatEn :1;       /**< 1 - flat enable, 0 - flat disable */
 #elif BIG_ENDIAN == 1
-  /*! 1 - flat enable, 0 - flat disable */
-  uint16_t flatEn :1;
-  /*! delay time for which the flat value must remain stable for the
-   * flat interrupt to be generated */
-  uint16_t flatHoldTime : 2;
-  /*! flat interrupt hysteresis */
-  uint16_t flatHy : 3;
-  /*! flat threshold */
-  uint16_t flatTheta : 6;
+  uint16_t flatEn :1;         /**< 1 - flat enable, 0 - flat disable */
+  uint16_t flatHoldTime : 2;  /**< delay time for which the flat value must remain stable for the flat interrupt to be generated */
+  uint16_t flatHy : 3;        /**< flat interrupt hysteresis */
+  uint16_t flatTheta : 6;     /**< flat threshold */
 #endif
 };
 
 struct bmi160AccLowGIntCfg {
 #if LITTLE_ENDIAN == 1
-  /*! low-g interrupt trigger delay */
-  uint8_t lowDur;
-  /*! low-g interrupt trigger threshold */
-  uint8_t lowThres;
-  /*! hysteresis of low-g interrupt */
-  uint8_t lowHyst :2;
-  /*! 0 - single-axis mode ,1 - axis-summing mode */
-  uint8_t lowMode :1;
-  /*! data source 0- filter & 1 pre-filter */
-  uint8_t lowDataSrc :1;
-  /*! 1 - enable low-g, 0 - disable low-g */
-  uint8_t lowEn :1;
+  uint8_t lowDur;       /**< low-g interrupt trigger delay */
+  uint8_t lowThres;     /**< low-g interrupt trigger threshold */
+  uint8_t lowHyst :2;   /**< hysteresis of low-g interrupt */
+  uint8_t lowMode :1;   /**< 0 - single-axis mode ,1 - axis-summing mode */
+  uint8_t lowDataSrc :1;/**< data source 0- filter & 1 pre-filter */
+  uint8_t lowEn :1;     /**< 1 - enable low-g, 0 - disable low-g */
 #elif BIG_ENDIAN == 1
-  /*! 1 - enable low-g, 0 - disable low-g */
-  uint8_t lowEn :1;
-  /*! data source 0- filter & 1 pre-filter */
-  uint8_t lowDataSrc :1;
-  /*! 0 - single-axis mode ,1 - axis-summing mode */
-  uint8_t lowMode : 1;
-  /*! hysteresis of low-g interrupt */
-  uint8_t lowHyst : 2;
-  /*! low-g interrupt trigger threshold */
-  uint8_t lowThres;
-  /*! low-g interrupt trigger delay */
-  uint8_t lowDur;
+  uint8_t lowEn :1;     /**< 1 - enable low-g, 0 - disable low-g */
+  uint8_t lowDataSrc :1;/**< data source 0- filter & 1 pre-filter */
+  uint8_t lowMode : 1;  /**< 0 - single-axis mode ,1 - axis-summing mode */
+  uint8_t lowHyst : 2;  /**< hysteresis of low-g interrupt */
+  uint8_t lowThres;     /**< low-g interrupt trigger threshold */
+  uint8_t lowDur;       /**< low-g interrupt trigger delay */
 #endif
 };
 
 struct bmi160AccHighGIntCfg {
 #if LITTLE_ENDIAN == 1
-  /*! High-g interrupt x, 1 - enable, 0 - disable */
-  uint8_t high_g_x :1;
-  /*! High-g interrupt y, 1 - enable, 0 - disable */
-  uint8_t high_g_y :1;
-  /*! High-g interrupt z, 1 - enable, 0 - disable */
-  uint8_t high_g_z :1;
-  /*! High-g hysteresis  */
-  uint8_t highHy :2;
-  /*! data source 0- filter & 1 pre-filter */
-  uint8_t highDataSrc :1;
-  /*! High-g threshold */
-  uint8_t highThres;
-  /*! High-g duration */
-  uint8_t highDur;
+  
+  uint8_t high_g_x :1;    /**< High-g interrupt x, 1 - enable, 0 - disable */
+  uint8_t high_g_y :1;    /**< High-g interrupt y, 1 - enable, 0 - disable */
+  uint8_t high_g_z :1;    /**< High-g interrupt z, 1 - enable, 0 - disable */
+  uint8_t highHy :2;      /**< High-g hysteresis  */
+  uint8_t highDataSrc :1; /**< data source 0- filter & 1 pre-filter */
+  uint8_t highThres;      /**< High-g threshold */
+  uint8_t highDur;        /**< High-g duration */
 #elif BIG_ENDIAN == 1
-  /*! High-g duration */
-  uint8_t highDur;
-  /*! High-g threshold */
-  uint8_t highThres;
-  /*! data source 0- filter & 1 pre-filter */
-  uint8_t highDataSrc :1;
-  /*! High-g hysteresis  */
-  uint8_t highHy : 2;
-  /*! High-g interrupt z, 1 - enable, 0 - disable */
-  uint8_t high_g_z : 1;
-  /*! High-g interrupt y, 1 - enable, 0 - disable */
-  uint8_t high_g_y : 1;
-  /*! High-g interrupt x, 1 - enable, 0 - disable */
-  uint8_t high_g_x : 1;
+  uint8_t highDur;       /**< High-g duration */
+  uint8_t highThres;     /**< High-g threshold */
+  uint8_t highDataSrc :1;/**< data source 0- filter & 1 pre-filter */
+  uint8_t highHy : 2;    /**< High-g hysteresis  */
+  uint8_t high_g_z : 1;  /**< High-g interrupt z, 1 - enable, 0 - disable */
+  uint8_t high_g_y : 1;  /**< High-g interrupt y, 1 - enable, 0 - disable */
+  uint8_t high_g_x : 1;  /**< High-g interrupt x, 1 - enable, 0 - disable */
 #endif
 };
 
 union bmi160IntTypeCfg {
-  /*! Tap interrupt structure */
-  struct bmi160AccTapIntCfg accTapInt;
-  /*! Slope interrupt structure */
-  struct bmi160AccAnyMotIntCfg accAnyMotionInt;
-  /*! Significant motion interrupt structure */
-  struct bmi160AccSigMotIntCfg accSigMotionInt;
-  /*! Step detector interrupt structure */
-  struct bmi160AccStepDetectIntCfg accStepDetectInt;
-  /*! No motion interrupt structure */
-  struct bmi160AccNoMotionIntCfg accNoMotionInt;
-  /*! Orientation interrupt structure */
-  struct bmi160AccOrientIntCfg accOrientInt;
-  /*! Flat interrupt structure */
-  struct bmi160AccFlatDetectIntCfg accFlatInt;
-  /*! Low-g interrupt structure */
-  struct bmi160AccLowGIntCfg accLowGInt;
-  /*! High-g interrupt structure */
-  struct bmi160AccHighGIntCfg accHighGInt;
+  struct bmi160AccTapIntCfg accTapInt;               /**< Tap interrupt structure */
+  struct bmi160AccAnyMotIntCfg accAnyMotionInt;      /**< Slope interrupt structure */
+  struct bmi160AccSigMotIntCfg accSigMotionInt;      /**< Significant motion interrupt structure */
+  struct bmi160AccStepDetectIntCfg accStepDetectInt; /**< Step detector interrupt structure */
+  struct bmi160AccNoMotionIntCfg accNoMotionInt;     /**< No motion interrupt structure */
+  struct bmi160AccOrientIntCfg accOrientInt;         /**< Orientation interrupt structure */
+  struct bmi160AccFlatDetectIntCfg accFlatInt;       /**< Flat interrupt structure */
+  struct bmi160AccLowGIntCfg accLowGInt;             /**< Low-g interrupt structure */
+  struct bmi160AccHighGIntCfg accHighGInt;           /**< High-g interrupt structure */
 };
 
 struct bmi160IntSettg {
-  /*! Interrupt channel */
-  enum bmi160IntChannel intChannel;
-  /*! Select Interrupt */
-  enum bmi160IntTypes intType;
-  /*! Structure configuring Interrupt pins */
-  struct bmi160IntPinSettg intPinSettg;
-  /*! Union configures required interrupt */
-  union bmi160IntTypeCfg intTypeCfg;
-  /*! FIFO FULL INT 1-enable, 0-disable */
-  uint8_t fifoFullIntEn :1;
-  /*! FIFO WTM INT 1-enable, 0-disable */
-  uint8_t fifoWTMIntEn :1;
-};
+  enum bmi160IntChannel intChannel;    /**< Interrupt channel */
+  enum bmi160IntTypes intType;         /**< Select Interrupt */
+  struct bmi160IntPinSettg intPinSettg;/**< Structure configuring Interrupt pins */
+  union bmi160IntTypeCfg intTypeCfg;   /**< Union configures required interrupt */
+  uint8_t fifoFullIntEn :1;            /**< FIFO FULL INT 1-enable, 0-disable */
+  uint8_t fifoWTMIntEn :1;             /**< FIFO WTM INT 1-enable, 0-disable */
+}*<
 
 enum bmi160StepDetectMode {
   BMI160_STEP_DETECT_NORMAL,
   BMI160_STEP_DETECT_SENSITIVE,
   BMI160_STEP_DETECT_ROBUST,
-  /*! Non recommended User defined setting */
-  BMI160_STEP_DETECT_USER_DEFINE
+  BMI160_STEP_DETECT_USER_DEFINE   /**< Non recommended User defined setting */
 };
 
 class DFRobot_BMI160{
-  public:
-    DFRobot_BMI160();
-    
-    /*
-     * @brief set the i2c addr and init the i2c.
-     * @param i2c_addr  bmi160 i2c addr
-     *     0x68: connect SDIO pin of the BMI160 to GND which means the default I2C address
-     *     0x69: set I2C address by parameter
-     * @return BMI160_OK(0) means success
-     */
-    int8_t I2cInit(int8_t i2c_addr = BMI160_I2C_ADDR);
-    
-    /*
-     * @brief select mode and save returned data to parameter data.
-     * @param type  three type
-     *     onlyAccel: only get the accel data
-     *     onlyGyro: only get the gyro data
-     *     bothAccelGyro: get boath accel and gyro data
-     * @param *data  save returned data to parameter data
-     * @return BMI160_OK(0) means succse
-     */
-    int8_t getSensorData(uint8_t type,int16_t* data);
-    
-    /*
-     * @brief get the accel data 
-     * @param pointer to store the accel data
-     * @return BMI160_OK(0) means succse
-     */
-    int8_t getAccelData(int16_t* data);
-    
-    /*
-     * @brief get the gyro data 
-     * @param pointer to store the gyro data
-     * @return BMI160_OK(0) means succse
-     */
-    int8_t getGyroData(int16_t* data);
-    
-    /*
-     * @brief get the accel and gyro data 
-     * @param pointer to store the accel and gyro data
-     * @return BMI160_OK(0) means succse
-     */
-    int8_t getAccelGyroData(int16_t* data);
+public:
+  DFRobot_BMI160();
+  
+  /**
+   * @fn I2cInit
+   * @brief set the i2c addr and init the i2c.
+   * @param i2c_addr  bmi160 i2c addr
+   * @n     0x68: connect SDIO pin of the BMI160 to GND which means the default I2C address
+   * @n     0x69: set I2C address by parameter
+   * @return BMI160_OK(0) means success
+   */
+  int8_t I2cInit(int8_t i2c_addr = BMI160_I2C_ADDR);
+  
+  /**
+   * @fn getSensorData
+   * @brief select mode and save returned data to parameter data.
+   * @param type  three type
+   * @n     onlyAccel    :   only get the accel data
+   * @n     onlyGyro     :   only get the gyro data
+   * @n     bothAccelGyro:   get boath accel and gyro data
+   * @param data  save returned data to parameter data
+   * @return BMI160_OK(0) means succse
+   */
+  int8_t getSensorData(uint8_t type,int16_t* data);
+  
+  /**
+   * @fn getAccelData
+   * @brief get the accel data 
+   * @param data pointer to store the accel data
+   * @return BMI160_OK(0) means succse
+   */
+  int8_t getAccelData(int16_t* data);
+  
+  /**
+   * @fn getGyroData
+   * @brief get the gyro data 
+   * @param data pointer to store the gyro data
+   * @return BMI160_OK(0) means succse
+   */
+  int8_t getGyroData(int16_t* data);
+  
+  /**
+   * @fn getAccelGyroData
+   * @brief get the accel and gyro data 
+   * @param data pointer to store the accel and gyro data
+   * @return BMI160_OK(0) means succse
+   */
+  int8_t getAccelGyroData(int16_t* data);
 
-    /*
-     * @brief reset bmi160 hardware
-     * @return BMI160_OK(0) means success
-     */
-    int8_t softReset();
-    
-    /*
-     * @brief set interrupt number and choosing step detector interrupt
-     * @param choose int1 or int2
-     * @return BMI160_OK(0) means succse
-     */
-    int8_t setInt(int intNum);
-	void test();
-	void writeReg(uint8_t reg, void* pBuf, size_t size);
-   size_t readReg(uint8_t reg, void* pBuf, size_t size);
-    
-    /*
-     * @brief enable the step counter
-     * @return BMI160_OK(0) means succse
-     */
-    int8_t setStepCounter();
-    
-    /*
-     * @brief read the step counter from bmi160
-     * @param pointer to store the step 
-     * @return BMI160_OK(0) measn succse
-     */
-    int8_t readStepCounter(uint16_t *stepVal);
-    /*
-     * @brief set the step power model
-     * @param type of model 
-     * @return BMI160_OK(0) measn succse
-     */
-    int8_t setStepPowerMode(uint8_t model);
-    
+  /**
+   * @fn softReset
+   * @brief reset bmi160 hardware
+   * @return BMI160_OK(0) means success
+   */
+  int8_t softReset();
+  
+  /**
+   * @fn setInt
+   * @brief set interrupt number and choosing step detector interrupt
+   * @param intNum choose int1 or int2
+   * @return BMI160_OK(0) means succse
+   */
+  int8_t setInt(int intNum);
+  
+  /**
+   * @fn setStepCounter
+   * @brief enable the step counter
+   * @return BMI160_OK(0) means succse
+   */
+  int8_t setStepCounter();
+  
+  /**
+   * @fn readStepCounter
+   * @brief read the step counter from bmi160
+   * @param stepVal pointer to store the step 
+   * @return BMI160_OK(0) measn succse
+   */
+  int8_t readStepCounter(uint16_t *stepVal);
+  /**
+   * @fn setStepPowerMode
+   * @brief set the step power model
+   * @param model type of model 
+   * @return BMI160_OK(0) measn succse
+   */
+  int8_t setStepPowerMode(uint8_t model);
+  
 
-    uint8_t onlyAccel=1;
-    uint8_t onlyGyro=2;
-    uint8_t bothAccelGyro=3;
-    uint8_t stepNormalPowerMode=0;
-    uint8_t stepLowPowerMode=1;
+  uint8_t onlyAccel=1;
+  uint8_t onlyGyro=2;
+  uint8_t bothAccelGyro=3;
+  uint8_t stepNormalPowerMode=0;
+  uint8_t stepLowPowerMode=1;
 
   private:
     int8_t I2cInit(struct bmi160Dev *dev);

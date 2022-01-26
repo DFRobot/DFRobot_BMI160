@@ -1,23 +1,20 @@
- /*!
-  * accelGyro.ino
-  *
-  * I2C addr:
-  *   0x68: connect SDIO pin of the BMI160 to GND which means the default I2C address
-  *   0x69: set I2C address by parameter
-  *
-  * Through the example, you can get the sensor data by using getSensorData:
-  * get acell by paremeter onlyAccel;
-  * get gyro by paremeter onlyGyro;
-  * get both acell and gyro by paremeter bothAccelGyro.
-  * 
-  * With the rotation of the sensor, data changes are visible.
-  *
-  * Copyright   [DFRobot](http://www.dfrobot.com), 2016
-  * Copyright   GNU Lesser General Public License
-  *
-  * version  V1.0
-  * date  2017-11-27
-  */
+/*!
+ * @file accelGyro.ino
+ * @brief I2C addr:
+ * @n  0x68: connect SDIO pin of the BMI160 to GND which means the default I2C address
+ * @n  0x69: set I2C address by parameter
+ * @n Through the example, you can get the sensor data by using getSensorData:
+ * @n get acell by paremeter onlyAccel;
+ * @n get gyro by paremeter onlyGyro;
+ * @n get both acell and gyro by paremeter bothAccelGyro.
+ * @n With the rotation of the sensor, data changes are visible.
+ * @copyright	Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+ * @license The MIT License (MIT)
+ * @author  DFRobot_haoJ(hao.jiang@dfrobot.com)
+ * @version V1.0
+ * @date 2017-12-01
+ * @url https://github.com/DFRobot/DFRobot_BMI160
+ */
 
 #include <DFRobot_BMI160.h>
 

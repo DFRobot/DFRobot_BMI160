@@ -1,33 +1,32 @@
 # -*- coding:utf-8 -*-
 
 '''
-  # @file demo_step_counter_low_power.py
-  # @brief Through the example, you can get the sensor data which means step counter.
-  # @n set step counter power mode by setStepPowerMode(stepNormalPowerMode means normal model,stepLowPowerMode means low power model)
-  # @n upload interrupt number by set_int (choose int1 or int2)  
-  # @n data from int1 and int2 read in readStepCounter
-  #
-  # @n Hardware conneted table in IIC
-  # @n Hardware conneted table in IIC
-  # @n ----------------------------------------------------------------------------------------
-  # @n  Sensor      |                                     raspberry pi                         |
-  # @n -----------------------------------------------------------------------------------------
-  # @n  +           | 3V3/VCC                                                   |   3V3/VCC    |
-  # @n  -           | GND                                                       |      GND     |
-  # @n  C           | connected to scl of MCU's IIC                             |  SCL/3(BCM)  |
-  # @n  D           | connected to sda of MCU's IIC                             |  SDA/2(BCM)  |
-  # @n  INT1        | connected to the external interrupt IO pin of MCU         |  22(BCM)     |
-  # @n  INT2        | connected to the external interrupt IO pin of MCU         |      悬空    |
-  # @n  SDO         | connected to the IO pin of MCU or connected to GND or VCC |      悬空    |
-  # @n ----------------------------------------------------------------------------------------
-  #
-  # @Copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
-  # @licence     The MIT License (MIT)
-  # @author [Arya](xue.peng@dfrobot.com)
-  # @version  V1.0
-  # @date  2021-06-10
-  # @get from https://www.dfrobot.com
-  # @url from https://github.com/DFRobot/DFRobot_BME280
+  @file demo_step_counter_low_power.py
+  @brief Through the example, you can get the sensor data which means step counter.
+  @n set step counter power mode by setStepPowerMode(stepNormalPowerMode means normal model,stepLowPowerMode means low power model)
+  @n upload interrupt number by set_int (choose int1 or int2)  
+  @n data from int1 and int2 read in readStepCounter
+ 
+  @n Hardware conneted table in IIC
+  @n Hardware conneted table in IIC
+  @n ----------------------------------------------------------------------------------------
+  @n  Sensor      |                                     raspberry pi                         |
+  @n -----------------------------------------------------------------------------------------
+  @n  +           | 3V3/VCC                                                   |   3V3/VCC    |
+  @n  -           | GND                                                       |      GND     |
+  @n  C           | connected to scl of MCU's IIC                             |  SCL/3(BCM)  |
+  @n  D           | connected to sda of MCU's IIC                             |  SDA/2(BCM)  |
+  @n  INT1        | connected to the external interrupt IO pin of MCU         |  22(BCM)     |
+  @n  INT2        | connected to the external interrupt IO pin of MCU         |   floating   |
+  @n  SDO         | connected to the IO pin of MCU or connected to GND or VCC |   floating   |
+  @n ----------------------------------------------------------------------------------------
+ 
+  @Copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+  @licence     The MIT License (MIT)
+  @author [Arya](xue.peng@dfrobot.com)
+  @version  V1.0
+  @date  2021-06-10
+  @url from https://github.com/DFRobot/DFRobot_BMI160
 '''
 
 import sys

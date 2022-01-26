@@ -1,27 +1,26 @@
 # -*- coding:utf-8 -*-
 
 '''
-  # @file demo_get_accel_gyro.py
-  # @brief 获取BMI160 6轴传感器的陀螺仪、加速度等数据。
-  # @n ----------------------------------------------------------------------------------------
-  # @n  Sensor      |                                     raspberry pi                         |
-  # @n -----------------------------------------------------------------------------------------
-  # @n  +           | 3V3/VCC                                                   |   3V3/VCC    |
-  # @n  -           | GND                                                       |      GND     |
-  # @n  C           | connected to scl of MCU's IIC                             |  SCL/3(BCM)  |
-  # @n  D           | connected to sda of MCU's IIC                             |  SDA/2(BCM)  |
-  # @n  INT1        | connected to the external interrupt IO pin of MCU         |      悬空    |
-  # @n  INT2        | connected to the external interrupt IO pin of MCU         |      悬空    |
-  # @n  SDO         | connected to the IO pin of MCU or connected to GND or VCC |      悬空    |
-  # @n ----------------------------------------------------------------------------------------
-  #
-  # @Copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
-  # @licence     The MIT License (MIT)
-  # @author [Arya](xue.peng@dfrobot.com)
-  # @version  V1.0
-  # @date  2021-06-11
-  # @get from https://www.dfrobot.com
-  # @url from https://github.com/DFRobot/DFRobot_BME280
+   @file demo_get_accel_gyro.py
+   @brief BMI160 6轴传感器的陀螺仪、加速度等数据。
+   @n ----------------------------------------------------------------------------------------
+   @n  Sensor      |                                     raspberry pi                         |
+   @n -----------------------------------------------------------------------------------------
+   @n  +           | 3V3/VCC                                                   |   3V3/VCC    |
+   @n  -           | GND                                                       |      GND     |
+   @n  C           | connected to scl of MCU's IIC                             |  SCL/3(BCM)  |
+   @n  D           | connected to sda of MCU's IIC                             |  SDA/2(BCM)  |
+   @n  INT1        | connected to the external interrupt IO pin of MCU         |  floating    |
+   @n  INT2        | connected to the external interrupt IO pin of MCU         |  floating    |
+   @n  SDO         | connected to the IO pin of MCU or connected to GND or VCC |  floating    |
+   @n ----------------------------------------------------------------------------------------
+  
+   @Copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+   @licence     The MIT License (MIT)
+   @author [Arya](xue.peng@dfrobot.com)
+   @version  V1.0
+   @date  2021-06-11
+   @url from https://github.com/DFRobot/DFRobot_BME280
 '''
 
 import sys

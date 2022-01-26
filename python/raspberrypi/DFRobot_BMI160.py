@@ -30,7 +30,6 @@
   @author [Arya](xue.peng@dfrobot.com)
   @version  V1.0
   @date  2021-06-10
-  @get from https://www.dfrobot.com
   @url from https://github.com/DFRobot/DFRobot_BMI160
 '''
 import sys

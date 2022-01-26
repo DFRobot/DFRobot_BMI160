@@ -1,4 +1,16 @@
+/*!
+ * @file DFRobot_BMI160.cpp
+ * @brief Define the basic structure of class DFRobot_BMI160 
+ * @copyright	Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+ * @license The MIT License (MIT)
+ * @author  DFRobot_haoJ(hao.jiang@dfrobot.com)
+ * @version V1.0
+ * @date 2017-12-01
+ * @url https://github.com/DFRobot/DFRobot_BMI160
+ */
+
 #include"DFRobot_BMI160.h"
+
 const uint8_t int_mask_lookup_table[13] = {
     BMI160_INT1_SLOPE_MASK,
     BMI160_INT1_SLOPE_MASK,
@@ -822,41 +834,6 @@ int8_t DFRobot_BMI160::setRegs(uint8_t reg_addr, uint8_t *data, uint16_t len, st
   }
 
   return rslt;
-}
-
-void DFRobot_BMI160::writeReg(uint8_t reg, void* pBuf, size_t size){
-  if(pBuf == NULL){
-      return;
-  }
-  
-  uint8_t * _pBuf = (uint8_t *)pBuf;
-
-  Wire.beginTransmission(0x69);
-  Wire.write(&reg,1);
-
-  for(uint16_t i = 0; i < size; i++){
-    Wire.write(_pBuf[i]);
-  }
-  Wire.endTransmission();
-}
-
-size_t DFRobot_BMI160::readReg(uint8_t reg, void* pBuf, size_t size){
-  if(pBuf == NULL){
-    return 0;
-  }
-  uint8_t * _pBuf = (uint8_t *)pBuf;
-  
-  Wire.beginTransmission(0x69);
-  Wire.write(reg);
-  Wire.endTransmission(true);
-  delay(10);
-  Wire.requestFrom(0x69,size);
-
-  for(int i = 0; i < size; i++){
-    _pBuf[i]=Wire.read();
-    delay(1);
-  }
-  return size;
 }
 
 int8_t DFRobot_BMI160::I2cSetRegs(struct bmi160Dev *dev, uint8_t reg_addr, uint8_t *data, uint16_t len)

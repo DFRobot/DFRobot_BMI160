@@ -1,21 +1,17 @@
 /*!
-  * stepCounter.ino
-  *
-  * I2C addr:
-  *   0x68: connect SDIO pin of the BMI160 to GND which means the default I2C address
-  *   0x69: set I2C address by parameter
-  *
-  * Through the example, you can get the sensor data which means step counter.
-  * set step counter power mode by setStepPowerMode(stepNormalPowerMode means normal model,stepLowPowerMode means low power model)
-  * upload interrupt number by setInt (choose int1 or int2)  
-  * data from int1 and int2 read in readStepCounter
-  *
-  * Copyright   [DFRobot](http://www.dfrobot.com), 2016
-  * Copyright   GNU Lesser General Public License
-  *
-  * version  V1.0
-  * date  2017-11-27
-  */
+ * @file stepCounterLowPower.ino
+ * @brief I2C addr:
+ * @n  0x68: connect SDIO pin of the BMI160 to GND which means the default I2C address
+ * @n  0x69: set I2C address by parameter
+ * @n Through the example, you can get the sensor data which means step counter.Set step counter power mode by setStepPowerMode(stepNormalPowerMode means normal
+ * @n model,stepLowPowerMode means low power model) upload interrupt number by setInt (choose int1 or int2)  data from int1 and int2 read in readStepCounter
+ * @copyright	Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+ * @license The MIT License (MIT)
+ * @author  DFRobot_haoJ(hao.jiang@dfrobot.com)
+ * @version V1.0
+ * @date 2017-12-01
+ * @url https://github.com/DFRobot/DFRobot_BMI160
+ */
 
 #include <DFRobot_BMI160.h>
 

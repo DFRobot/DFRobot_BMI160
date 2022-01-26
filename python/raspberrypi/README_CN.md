@@ -1,68 +1,67 @@
 # DFRobot_BMI160
 
-* [中文](./README_CN.md)
+* [English Version](./README.md)
 
-The BMI160 is a highly integrated, low power inertial measurement unit (IMU) that provides precise acceleration and angular rate (gyroscopic) measurement.<br>
-The BMI160 contains 16 bit digtial,triaxial accelerometer and 16 bit digital, triaxial gyroscope.<br>
-This example is for BMI160 sensor and it oprated via Arduino I2C.<br>
+BMI160 是一种高度集成的低功耗惯性测量单元 (IMU)，可提供精确的加速度和角速率（陀螺仪）测量。<br>
+BMI160 包含 16 位数字三轴加速度计和 16 位数字三轴陀螺仪。<br>
+此示例适用于 BMI160 传感器，它通过 Arduino I2C 进行操作。<br>
 
 ![产品效果图](../../resources/images/SEN0250.png)
 
-## Product Link（[https://www.dfrobot.com/product-1716.html](https://www.dfrobot.com/product-1716.html)）
+
+## 产品链接（[https://www.dfrobot.com.cn/goods-1693.html](https://www.dfrobot.com.cn/goods-1693.html)）
     SKU: SEN0250  
-   
-## Table of Contents
 
-* [Summary](#summary)
-* [Connected](#connected)
-* [Installation](#installation)
-* [Methods](#methods)
-* [Compatibility](#compatibility)
-* [History](#history)
-* [Credits](#credits)
+## 目录
 
-## Summary
-This is a 6-axis MEMS sensor BMI160 library. It can only support IIC communication.<br>
-It can detect accelerometer, gyroscope, and onboard temperature.<br>
+  * [概述](#概述)
+  * [连接](#连接)
+  * [库安装](#库安装)
+  * [方法](#方法)
+  * [兼容性](#兼容性)
+  * [历史](#历史)
+  * [创作者](#创作者)
 
-## Connected
+## 概述
 
+提供 Arduino 库，通过 I2C 通信控制 bmi160 获取 加速度、陀螺仪和计步器数据。<br>
 
+## 连接
 
 | Sensor      |                          raspberry pi                     |
-|------------ |:---------------------------------------------------------:|
-|  +           | 3V3/VCC                                                   |
+| ------------ | :--: |
+|  +           | 3V3 or VCC                                                   |
 |  -           | GND                                                       |
-|  C           | connected to scl of MCU's IIC                             |
-|  D           | connected to sda of MCU's IIC                             |
-|  INT1        | connected to the external interrupt IO pin of MCU         |
-|  INT2        | connected to the external interrupt IO pin of MCU         |
-|  SDO         | connected to the IO pin of MCU or connected to GND or VCC |
+|  C           | 连接到树莓派的scl引脚                                       |
+|  D           | 连接到树莓派的sda引脚                                       |
+|  INT1        | 连接到树莓派的外部中断引脚                                   |
+|  INT2        | 连接到树莓派的外部中断引脚                                   |
+|  SDO         | 连接到树莓派的IO引脚或连接到VCC或GND                         |
 
-## Installation
-1. To use this library, first download the library file<br>
+
+## 库安装
+1. 下载库至树莓派，要使用这个库，首先要将库下载到Raspberry Pi，命令下载方法如下:<br>
 ```python
 sudo git clone https://github.com/DFRobot/DFRobot_BMI160
 ```
-2. Open and run the routine. To execute a routine demo_x.py, enter python demo_x.py in the command line. For example, to execute the demo_sleep.py routine, you need to enter :<br>
+2. 打开并运行例程，要执行一个例程demo_x.py，请在命令行中输入python demo_x.py。例如，要执行 demo_sleep.py例程，你需要输入:<br>
 
 ```python
 python demo_sleep.py 
-or
+或 
 python2 demo_sleep.py 
-or
+或 
 python3 demo_sleep.py
 ```
 
+## 方法
 
-## Methods
-
-```python 
+```python
   '''
-    @brief The constructor of the BMI160 sensor using IIC communication.
-    @param addr:  7-bit IIC address, controlled by SDO pin.
-    @n     BMI160_IIC_ADDR_SDO_H or 0x69:  SDO pull high.(default)
-    @n     BMI160_IIC_ADDR_SDO_L or 0x68:  SDO pull down.
+    @brief 使用 IIC 通信的 BMI160 传感器的构造函数。
+    @param addr:  7位IIC地址，通过SDO引脚控制
+    @n     BMI160_IIC_ADDR_SDO_H or 0x69:  SDO引脚拉高
+    @n     BMI160_IIC_ADDR_SDO_L or 0x68:  SDO引脚拉低
   '''
   class DFRobot_BMI160_IIC(DFRobot_BMI160):
   def __init__(self,addr = BMI160_IIC_ADDR_SDO_H):
@@ -160,9 +159,10 @@ python3 demo_sleep.py
     @n 注意： 当'error'的值为BMI160_OK时，表示'step'为有效数据，否则为无效数据
   '''
   def read_step_counter(self):
+  
 ```
 
-## Compatibility
+## 兼容性
 
 | 主板         | 通过 | 未通过 | 未测试 | 备注 |
 | ------------ | :--: | :----: | :----: | :--: |
@@ -177,13 +177,14 @@ python3 demo_sleep.py
 | Python2 |  √   |        |        |      |
 | Python3 |  √   |        |        |      |
 
-## History
+## 历史
 
-- 2021-06-11 - Version 1.0.0 released.s
+- 2021/06/01 - 1.0.0 版本
 
-## Credits
+## 创作者
 
 Written by Arya(xue.peng@dfrobot.com), 2021. (Welcome to our [website](https://www.dfrobot.com/))
+
 
 
 
