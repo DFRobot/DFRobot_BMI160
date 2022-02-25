@@ -906,7 +906,7 @@ struct bmi160IntSettg {
   union bmi160IntTypeCfg intTypeCfg;   /**< Union configures required interrupt */
   uint8_t fifoFullIntEn :1;            /**< FIFO FULL INT 1-enable, 0-disable */
   uint8_t fifoWTMIntEn :1;             /**< FIFO WTM INT 1-enable, 0-disable */
-}
+};
 
 enum bmi160StepDetectMode {
   BMI160_STEP_DETECT_NORMAL,
