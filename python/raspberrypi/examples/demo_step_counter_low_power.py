@@ -3,8 +3,8 @@
 '''
   @file demo_step_counter_low_power.py
   @brief Through the example, you can get the sensor data which means step counter.
-  @n set step counter power mode by setStepPowerMode(stepNormalPowerMode means normal model,stepLowPowerMode means low power model)
-  @n upload interrupt number by set_int (choose int1 or int2)  
+  @n Set step counter power mode by setStepPowerMode(stepNormalPowerMode means normal mode, stepLowPowerMode means low power mode)
+  @n Upload interrupt number by set_int (choose int1 or int2)  
   @n data from int1 and int2 read in readStepCounter
  
   @n Hardware conneted table in IIC
@@ -56,19 +56,19 @@ def step_change(channel):
 
 if __name__ == "__main__":
   '''
-    @brief 初始化传感器
-    @return 错误代码:
-    BMI160_OK                         or  0 : 初始化成功，无错误
-    BMI160_E_NULL_PTR                 or -1 : 参数为空
-    BMI160_E_COM_FAIL                 or -2 : 交互失败
-    BMI160_E_DEV_NOT_FOUND            or -3 : 设备未连接
-    BMI160_E_OUT_OF_RANGE             or -4 : 量程超出传感器范围
-    BMI160_E_INVALID_INPUT            or -5 : 无效的输入
-    BMI160_E_ACCEL_ODR_BW_INVALID     or -6 : 加速度数据输出速率无效
-    BMI160_E_GYRO_ODR_BW_INVALID      or -7 : 陀螺仪数据输出速率无效
-    BMI160_E_LWP_PRE_FLTR_INT_INVALID or -8 : 低功耗中断滤波器无效
-    BMI160_E_LWP_PRE_FLTR_INVALID     or -9 : 低功耗滤波器无效
-    BMI160_FOC_FAILURE                or -11: 晶振失败
+    @brief Initialize sensor
+    @return Error code:
+    BMI160_OK                         or  0 : init succeeded, no error
+    BMI160_E_NULL_PTR                 or -1 : the parameters is empty
+    BMI160_E_COM_FAIL                 or -2 : interaction failed
+    BMI160_E_DEV_NOT_FOUND            or -3 : device not connected
+    BMI160_E_OUT_OF_RANGE             or -4 : out of sensor range
+    BMI160_E_INVALID_INPUT            or -5 : invalid input
+    BMI160_E_ACCEL_ODR_BW_INVALID     or -6 : accelerometer data output rate is invalid
+    BMI160_E_GYRO_ODR_BW_INVALID      or -7 : gyroscope data output rate is invalid
+    BMI160_E_LWP_PRE_FLTR_INT_INVALID or -8 : low-power interrupt filter is invalid
+    BMI160_E_LWP_PRE_FLTR_INVALID     or -9 : low-power filter is invalid
+    BMI160_FOC_FAILURE                or -11: crystal oscillator failed
   '''
   while bmi.begin() != BMI160_OK:
     print("Initialization 6-axis sensor failed.")
@@ -76,34 +76,34 @@ if __name__ == "__main__":
   print("Initialization 6-axis sensor sucess.")
 
   '''
-    @brief 配置中断引脚
-    @param intNum: 传感器的INT引脚，INT1或INT2:
-    @n     1 : 传感器的INT1引脚
-    @n     2 : 传感器的INT2引脚
-    @return 错误代码:
-    BMI160_OK     or  0 : 配置成功
-    others value        : 配置失败
+    @brief Configure interrupt pin
+    @param intNum: The INT pin of sensor, INT1 or INT2:
+    @n     1 : The INT1 pin of sensor
+    @n     2 : The INT2 pin of sensor
+    @return Error code:
+    BMI160_OK     or  0 : Config succeeded
+    others value        : Config failed
   '''
   if bmi.set_int(1) != BMI160_OK:
     print("set interrput fail")
 
   '''
-    @brief 设置计步计数
-    @return 错误代码:
-    @n      BMI160_OK     or  0 : 设置成功
-    @n      others value        : 设置失败
+    @brief Set step count
+    @return Error code:
+    @n      BMI160_OK     or  0 : setting succeeded
+    @n      others value        : setting failed
   '''
   if bmi.set_step_counter() != BMI160_OK:
     print("set step fail")
 
   '''
-    @brief 设置计步模式
-    @param model: 模式类型
-    @n     step_normal_power_mode:  普通模式下计步
-    @n     step_lower_power_mode :  低功耗模式下计步
-    @return 错误代码:
-    BMI160_OK     or  0 : 设置成功
-    others value        : 设置失败
+    @brief Set pedometer power mode
+    @param model: Power mode type
+    @n     step_normal_power_mode:  Count step in normal power mode
+    @n     step_lower_power_mode :  Count step in low power mode
+    @return Error code:
+    BMI160_OK     or  0 : Setting succeeded
+    others value        : Setting failed
   '''
   if bmi.set_step_power_mode(bmi.step_lower_power_mode) != BMI160_OK:
     print("set step_low_power_mode fail")
@@ -113,10 +113,10 @@ if __name__ == "__main__":
   while True:
     if read_step:
       '''
-        @brief 读取计步计数数据
-        @return 字典类型数据， 格式为错误代码+当前的计步数据:
+        @brief Read step count data
+        @return Data of dictionary type, the format is error code + current step count data:
         @n      {'error':0, 'step':0}
-        @n 注意： 当'error'的值为BMI160_OK时，表示'step'为有效数据，否则为无效数据
+        @n Note: when 'error' value is BMI160_OK, it means that 'step' is valid data, otherwise it is invalid data.
       '''
       rslt = bmi.read_step_counter()
       if rslt['error'] == BMI160_OK:

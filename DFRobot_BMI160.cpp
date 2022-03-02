@@ -1322,3 +1322,5 @@ int8_t DFRobot_BMI160::readStepCounter(uint16_t *stepVal, struct bmi160Dev *dev)
 
   return rslt; 
 }
+
+

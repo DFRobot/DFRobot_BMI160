@@ -2,7 +2,7 @@
 
 '''
    @file demo_get_accel_gyro.py
-   @brief BMI160 6轴传感器的陀螺仪、加速度等数据。
+   @brief Get BMI160 6-axis sensor data including gyroscope, accelerometer, etc.
    @n ----------------------------------------------------------------------------------------
    @n  Sensor      |                                     raspberry pi                         |
    @n -----------------------------------------------------------------------------------------
@@ -40,19 +40,19 @@ bmi = DFRobot_BMI160_IIC(addr = BMI160_IIC_ADDR_SDO_H)
 
 if __name__ == "__main__":
   '''
-    @brief 初始化传感器
-    @return 错误代码:
-    BMI160_OK                         or  0 : 初始化成功，无错误
-    BMI160_E_NULL_PTR                 or -1 : 参数为空
-    BMI160_E_COM_FAIL                 or -2 : 交互失败
-    BMI160_E_DEV_NOT_FOUND            or -3 : 设备未连接
-    BMI160_E_OUT_OF_RANGE             or -4 : 量程超出传感器范围
-    BMI160_E_INVALID_INPUT            or -5 : 无效的输入
-    BMI160_E_ACCEL_ODR_BW_INVALID     or -6 : 加速度数据输出速率无效
-    BMI160_E_GYRO_ODR_BW_INVALID      or -7 : 陀螺仪数据输出速率无效
-    BMI160_E_LWP_PRE_FLTR_INT_INVALID or -8 : 低功耗中断滤波器无效
-    BMI160_E_LWP_PRE_FLTR_INVALID     or -9 : 低功耗滤波器无效
-    BMI160_FOC_FAILURE                or -11: 晶振失败
+    @brief Initialize sensor
+    @return Error code:
+    BMI160_OK                         or  0 : init succeeded, no error
+    BMI160_E_NULL_PTR                 or -1 : the parameters is empty
+    BMI160_E_COM_FAIL                 or -2 : interaction failed
+    BMI160_E_DEV_NOT_FOUND            or -3 : device not connected
+    BMI160_E_OUT_OF_RANGE             or -4 : out of sensor range
+    BMI160_E_INVALID_INPUT            or -5 : invalid input
+    BMI160_E_ACCEL_ODR_BW_INVALID     or -6 : accelerometer data output rate is invalid
+    BMI160_E_GYRO_ODR_BW_INVALID      or -7 : gyroscope data output rate is invalid
+    BMI160_E_LWP_PRE_FLTR_INT_INVALID or -8 : low-power interrupt filter is invalid
+    BMI160_E_LWP_PRE_FLTR_INVALID     or -9 : low-power filter is invalid
+    BMI160_FOC_FAILURE                or -11: crystal oscillator failed
   '''
   while bmi.begin() != BMI160_OK:
     print("Initialization 6-axis sensor failed.")
@@ -62,12 +62,12 @@ if __name__ == "__main__":
   
   while True:
     '''
-      @brief 获取传感器数据，包括陀螺仪和加速度等数据
-      @return 返回字典类型的数据，格式如下：
+      @brief Get sensor data, including data of gyroscope, accelerometer, etc.
+      @return Return data of dictionary type, the format is as follows：
       @n      {'accel':{'x':0, 'y':0, 'z':0}, 'gyro':{'x':0, 'y':0, 'z':0}}
-      @n 注意，这是原始数据，得到正确数据还需要处理：
-      @n   陀螺仪： 陀螺仪的每轴数据需要*3.14/180.0，计算后，单位rad/s
-      @n   加速度： 加速度的每轴数据需要//16384.0, 计算后，单位g
+      @n Note: it's raw data, process it to get the correct data：
+      @n   Gyroscope: each axis of gyroscope data *3.14/180.0, after calculation, unit is rad/s
+      @n   Accelerometer: each axis of accelerometer data//16384.0, after calculation, unit is g
     '''
     data = bmi.get_sensor_data()
     print("gyro  :  x: %.3f rad/s,  y: %.3f rad/s,  z: %.3f rad/s"%(data['gyro']['x']*3.14/180.0, data['gyro']['y']*3.14/180.0, data['gyro']['z']*3.14/180.0))

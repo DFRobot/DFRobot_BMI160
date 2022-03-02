@@ -3,8 +3,8 @@
  * @brief I2C addr:
  * @n  0x68: connect SDIO pin of the BMI160 to GND which means the default I2C address
  * @n  0x69: set I2C address by parameter
- * @n Through the example, you can get the sensor data which means step counter.Set step counter power mode by setStepPowerMode(stepNormalPowerMode means normal
- * @n model,stepLowPowerMode means low power model) upload interrupt number by setInt (choose int1 or int2)  data from int1 and int2 read in readStepCounter
+ * @n Through the example, you can get the sensor data which means step counter. Set step counter power mode by setStepPowerMode(stepNormalPowerMode means normal
+ * @n model, stepLowPowerMode means low power model). Upload interrupt number by setInt (choose int1 or int2)  data from int1 and int2 read in readStepCounter
  * @copyright	Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license The MIT License (MIT)
  * @author  DFRobot_haoJ(hao.jiang@dfrobot.com)
@@ -60,7 +60,7 @@ void setup(){
     while(1);
   }
   
-  //set the bmi160 power model,contains:stepNormalPowerMode,stepLowPowerMode
+  //set the bmi160 power model, contains:stepNormalPowerMode,stepLowPowerMode
   if (bmi160.setStepPowerMode(bmi160.stepLowPowerMode) != BMI160_OK){
     Serial.println("set setStepPowerMode fail");
     while(1);

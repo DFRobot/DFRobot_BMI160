@@ -106,7 +106,7 @@ python3 demo_sleep.py
   def set_step_power_mode(self, model):
   
   '''
-    @brief 软件复位，复位后
+    @brief 软件复位
     @param model: 模式类型
     @n     step_normal_power_mode:  普通模式下计步
     @n     step_lower_power_mode :  低功耗模式下计步

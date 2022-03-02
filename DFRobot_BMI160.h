@@ -1001,7 +1001,7 @@ public:
    * @return BMI160_OK(0) measn succse
    */
   int8_t setStepPowerMode(uint8_t model);
-  
+
 
   uint8_t onlyAccel=1;
   uint8_t onlyGyro=2;
@@ -1067,6 +1067,7 @@ public:
     int8_t setStepCounter(uint8_t step_cnt_enable, struct bmi160Dev *dev);
     int8_t setStepPowerMode(uint8_t model,struct bmi160Dev *dev);
     int8_t readStepCounter(uint16_t *stepVal, struct bmi160Dev *dev);
+    
 
     struct bmi160Dev* Obmi160;
     struct bmi160SensorData* Oaccel;
