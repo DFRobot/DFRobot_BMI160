@@ -312,7 +312,7 @@ class DFRobot_BMI160:
   _dev_chip_id = BMI160_CHIP_ID
   
   _raw_data = [0]*BMI160_RAW_DATA_LENGTH
-  _update = 0;
+  _update = 0
   
   _gyro_x  = 0
   _gyro_y  = 0
@@ -472,7 +472,7 @@ class DFRobot_BMI160:
       @n Note: it's raw data, process it to get the correct data：
       @n   Accelerometer: accelerometer data of each axis//16384.0, after calculation, unit is g
     '''
-    senor = {'accel':{'x':0, 'y':0, 'z':0}}
+    sensor = {'accel':{'x':0, 'y':0, 'z':0}}
     if self._update & 0x01 != 0x01:
       rslt = self._get_raw_data()
     sensor['accel']['x'] = self._accel_x
@@ -489,7 +489,7 @@ class DFRobot_BMI160:
       @n Note: it's raw data, process it to get the correct data：
       @n   Gyroscope: gyroscope data of each axis *3.14/180.0, after calculation, unit is rad/s
     '''
-    senor = {'gyro':{'x':0, 'y':0, 'z':0}}
+    sensor = {'gyro':{'x':0, 'y':0, 'z':0}}
     if self._update & 0x02 != 0x02:
       rslt = self._get_raw_data()
     sensor['gyro']['x'] = self._gyro_x
