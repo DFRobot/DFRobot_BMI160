@@ -950,6 +950,15 @@ public:
   int8_t getAccelData(int16_t* data);
   
   /**
+   * @fn getAccelData
+   * @brief get the accel data 
+   * @param data pointer to store the accel data
+   * @param timestamp pointer to store the timestamp for accel
+   * @return BMI160_OK(0) means succse
+   */
+  int8_t getAccelData(int16_t* data, uint32_t* timestamp);
+  
+  /**
    * @fn getGyroData
    * @brief get the gyro data 
    * @param data pointer to store the gyro data
@@ -958,12 +967,30 @@ public:
   int8_t getGyroData(int16_t* data);
   
   /**
+   * @fn getGyroData
+   * @brief get the gyro data 
+   * @param data pointer to store the gyro data
+   * @param timestamp pointer to store the timestamp for gryo
+   * @return BMI160_OK(0) means succse
+   */
+  int8_t getGyroData(int16_t* data, uint32_t* timestamp);
+  
+  /**
    * @fn getAccelGyroData
    * @brief get the accel and gyro data 
    * @param data pointer to store the accel and gyro data
    * @return BMI160_OK(0) means succse
    */
   int8_t getAccelGyroData(int16_t* data);
+
+  /**
+   * @fn getAccelGyroData
+   * @brief get the accel and gyro data 
+   * @param data pointer to store the accel and gyro data
+   * @param timestamp pointer to store the timestamp for accel and gyro
+   * @return BMI160_OK(0) means succse
+   */
+  int8_t getAccelGyroData(int16_t* data, uint32_t* timestamp);
 
   /**
    * @fn softReset
