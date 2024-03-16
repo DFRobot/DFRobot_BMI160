@@ -937,7 +937,7 @@ public:
    * @n     onlyGyro     :   only get the gyro data
    * @n     bothAccelGyro:   get boath accel and gyro data
    * @param data  save returned data to parameter data
-   * @return BMI160_OK(0) means succse
+   * @return BMI160_OK(0) means success
    */
   int8_t getSensorData(uint8_t type,int16_t* data);
   
@@ -945,7 +945,7 @@ public:
    * @fn getAccelData
    * @brief get the accel data 
    * @param data pointer to store the accel data
-   * @return BMI160_OK(0) means succse
+   * @return BMI160_OK(0) means success
    */
   int8_t getAccelData(int16_t* data);
   
@@ -954,7 +954,7 @@ public:
    * @brief get the accel data 
    * @param data pointer to store the accel data
    * @param timestamp pointer to store the timestamp for accel
-   * @return BMI160_OK(0) means succse
+   * @return BMI160_OK(0) means success
    */
   int8_t getAccelData(int16_t* data, uint32_t* timestamp);
   
@@ -962,7 +962,7 @@ public:
    * @fn getGyroData
    * @brief get the gyro data 
    * @param data pointer to store the gyro data
-   * @return BMI160_OK(0) means succse
+   * @return BMI160_OK(0) means success
    */
   int8_t getGyroData(int16_t* data);
   
@@ -971,7 +971,7 @@ public:
    * @brief get the gyro data 
    * @param data pointer to store the gyro data
    * @param timestamp pointer to store the timestamp for gryo
-   * @return BMI160_OK(0) means succse
+   * @return BMI160_OK(0) means success
    */
   int8_t getGyroData(int16_t* data, uint32_t* timestamp);
   
@@ -979,7 +979,7 @@ public:
    * @fn getAccelGyroData
    * @brief get the accel and gyro data 
    * @param data pointer to store the accel and gyro data
-   * @return BMI160_OK(0) means succse
+   * @return BMI160_OK(0) means success
    */
   int8_t getAccelGyroData(int16_t* data);
 
@@ -988,7 +988,7 @@ public:
    * @brief get the accel and gyro data 
    * @param data pointer to store the accel and gyro data
    * @param timestamp pointer to store the timestamp for accel and gyro
-   * @return BMI160_OK(0) means succse
+   * @return BMI160_OK(0) means success
    */
   int8_t getAccelGyroData(int16_t* data, uint32_t* timestamp);
 
@@ -1003,14 +1003,14 @@ public:
    * @fn setInt
    * @brief set interrupt number and choosing step detector interrupt
    * @param intNum choose int1 or int2
-   * @return BMI160_OK(0) means succse
+   * @return BMI160_OK(0) means success
    */
   int8_t setInt(int intNum);
   
   /**
    * @fn setStepCounter
    * @brief enable the step counter
-   * @return BMI160_OK(0) means succse
+   * @return BMI160_OK(0) means success
    */
   int8_t setStepCounter();
   
@@ -1018,14 +1018,14 @@ public:
    * @fn readStepCounter
    * @brief read the step counter from bmi160
    * @param stepVal pointer to store the step 
-   * @return BMI160_OK(0) measn succse
+   * @return BMI160_OK(0) measn success
    */
   int8_t readStepCounter(uint16_t *stepVal);
   /**
    * @fn setStepPowerMode
    * @brief set the step power model
    * @param model type of model 
-   * @return BMI160_OK(0) measn succse
+   * @return BMI160_OK(0) measn success
    */
   int8_t setStepPowerMode(uint8_t model);
 
