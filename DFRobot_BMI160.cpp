@@ -88,12 +88,10 @@ int8_t DFRobot_BMI160::I2cInit(struct bmi160Dev *dev)
 
 int8_t DFRobot_BMI160::softReset()
 {
-  int8_t rslt=BMI160_OK;
-  if (Obmi160 == NULL){
-    rslt = BMI160_E_NULL_PTR;
+  if (Obmi160 == NULL) {
+    return BMI160_E_NULL_PTR;
   }  
-  rslt = softReset(Obmi160);
-  return rslt;
+  return softReset(Obmi160);
 }
 
 int8_t DFRobot_BMI160::softReset(struct bmi160Dev *dev)

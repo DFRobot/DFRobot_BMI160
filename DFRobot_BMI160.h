@@ -9,7 +9,6 @@
  * @url https://github.com/DFRobot/DFRobot_BMI160
  */
 
-#include<Arduino.h>
 #include<Wire.h>
 #include<SPI.h>
 
